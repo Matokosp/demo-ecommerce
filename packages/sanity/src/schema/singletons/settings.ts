@@ -64,13 +64,26 @@ export default defineType({
                   name: 'collectionLinks',
                   title: 'Collection links',
                   type: 'array',
-                  validation: (rule) => rule.unique().max(4),
+                  validation: (rule) => rule.unique().max(6),
                   of: [
                     {
                       name: 'collection',
                       type: 'reference',
                       weak: true,
                       to: [{type: 'collection'}],
+                    },
+                  ],
+                },
+                {
+                  name: 'productLinks',
+                  title: 'Product links',
+                  type: 'array',
+                  of: [
+                    {
+                      name: 'product',
+                      type: 'reference',
+                      weak: true,
+                      to: [{type: 'product'}],
                     },
                   ],
                 },
@@ -89,6 +102,12 @@ export default defineType({
           ],
         }),
       ],
+    }),
+    // Site logo
+    defineField({
+      name: 'siteLogo',
+      title: 'Site Logo',
+      type: 'image',
     }),
     // Footer
     defineField({

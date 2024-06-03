@@ -6,13 +6,12 @@
   button {
     letter-spacing: inherit;
   }
-  html {
-    @apply font-medium;
-    @apply text-offBlack;
-    @apply text-md;
-  }
   body {
-    @apply bg-white;
+    background-color: #fbfbf6;
+  }
+
+  a:focus {
+    outline: none;
   }
 }
 
@@ -68,6 +67,46 @@
   }
 }
 
+@layer utilities {
+  .font-thin {
+    font-variation-settings: "EXPO" 40;
+  }
+  .font-extralight {
+    font-variation-settings: "EXPO" 30;
+  }
+  .font-light {
+    font-variation-settings: "EXPO" 20;
+  }
+  .font-normal {
+    font-variation-settings: "EXPO" 10;
+  }
+  .font-medium {
+    font-variation-settings: "EXPO" 0;
+  }
+  .font-semibold {
+    font-variation-settings: "EXPO" -10;
+  }
+  .font-bold {
+    font-variation-settings: "EXPO" -20;
+  }
+  .font-extrabold {
+    font-variation-settings: "EXPO" -30;
+  }
+  .font-black {
+    font-variation-settings: "EXPO" -40;
+  }
+
+  .grid-container {
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 10px;
+  }
+}
+
+@font-face {
+  font-family: "Exposure";
+  src: url("./fonts/ExposureTrialVAR.woff2") format("woff2-variations");
+}
+
 * {
   font-variant-ligatures: none;
 }
@@ -80,4 +119,54 @@ html {
 .embla__slide {
   position: relative;
   flex: 0 0 100%;
+}
+
+h1,
+.heading-1 {
+  font-variation-settings: "EXPO" -20;
+  font-size: 80px;
+  line-height: 90px;
+  letter-spacing: -0.1px;
+}
+
+h2,
+.heading-2 {
+  font-variation-settings: "EXPO" -20;
+  font-size: 56px;
+  line-height: 64px;
+}
+
+h3,
+.heading-3 {
+  font-variation-settings: "EXPO" -20;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+h4,
+.heading-4 {
+  font-variation-settings: "EXPO" -20;
+  font-size: 16px;
+  line-height: 18px;
+}
+
+p,
+.text-body {
+  font-variation-settings: "EXPO" -20;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+p.body-small,
+small {
+  font-variation-settings: "EXPO" -20;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+caption,
+.caption {
+  font-variation-settings: "EXPO" -20;
+  font-size: 12px;
+  line-height: 14px;
 }

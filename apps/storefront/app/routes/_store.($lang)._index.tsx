@@ -74,9 +74,9 @@ export default function Index() {
             {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
             {page?.modules && (
-              <div className={clsx("mb-32 mt-24 px-4", "md:px-8")}>
-                <ModuleGrid items={page.modules} />
-              </div>
+              // <div className={clsx("", "md:px-8")}>
+              <ModuleGrid items={page.modules} />
+              // </div>
             )}
           </Await>
         </Suspense>

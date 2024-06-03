@@ -13,7 +13,7 @@ export default defineField({
   title: 'Internal Link',
   name: 'annotationLinkInternal',
   type: 'object',
-  icon: LinkIcon,
+  // icon: LinkIcon,
   components: {
     annotation: (props) => (
       <span>

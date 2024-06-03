@@ -4,6 +4,7 @@
 
 import {ListItemBuilder, StructureResolver} from 'sanity/desk'
 
+import article from './articles'
 import collections from './collections'
 import colorThemes from './colorThemes'
 import guides from './guides'
@@ -37,6 +38,7 @@ const DOCUMENT_TYPES_IN_STRUCTURE = [
   'media.tag',
   'page',
   'person',
+  'article',
   'product',
   'productVariant',
   'settings',
@@ -54,6 +56,8 @@ export const structure: StructureResolver = (S, context) =>
       S.divider(),
       collections(S, context),
       products(S, context),
+      S.divider(),
+      article(S, context),
       S.divider(),
       people(S, context),
       materials(S, context),

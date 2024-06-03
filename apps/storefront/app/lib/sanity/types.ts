@@ -21,6 +21,7 @@ export type SanityLabel = {
 export type SanityLayout = {
   seo: SanitySeo;
   menuLinks?: SanityMenuLink[];
+  siteLogo?: { url: string };
   footer?: {
     links?: SanityLink[];
     text?: PortableTextBlock[];
@@ -39,6 +40,20 @@ export type SanityCollection = {
   vector?: string;
 };
 
+export type SanityProduct = {
+  _id: string;
+  _type: string;
+  available: boolean;
+  gid: string;
+  previewImageUrl: string;
+  hero?: SanityHeroPage;
+  slug?: string;
+  title: string;
+  vector?: string;
+  onlineStoreUrl: string;
+  variantGid: string;
+};
+
 export type SanityCollectionPage = {
   _id: string;
   colorTheme: SanityColorTheme;
@@ -54,6 +69,7 @@ export type SanityCollectionGroup = {
   _key: string;
   _type: "collectionGroup";
   collectionLinks?: SanityCollection[];
+  productLinks?: SanityProduct[];
   collectionProducts?: SanityCollection;
   title: string;
 };
@@ -95,10 +111,13 @@ export type SanityHeroCollection = {
 };
 
 export type SanityHeroHome = {
+  color: string;
   content?: SanityImageWithProductHotspots | SanityProductWithVariant;
   link?: SanityLink;
   title?: string;
   data?: ProductWithNodes[] | ProductWithNodes;
+  heroImage?: SanityAssetImage;
+  textContent?: string;
 };
 
 export type SanityHeroPage = {
@@ -151,7 +170,9 @@ export type SanityModule =
   | SanityModuleGrid
   | SanityModuleImage
   | SanityModuleInstagram
-  | SanityModuleProduct;
+  | SanityModuleProduct
+  | SanityModuleProductHighlight
+  | SanityModuleCollectionsSwiper;
 
 export type SanityModuleAccordion = {
   _key?: string;
@@ -186,6 +207,26 @@ export type SanityModuleCollection = {
   _type: "module.collection";
   collection: SanityCollection;
   showBackground?: boolean;
+};
+
+export type SanityModuleCollectionsSwiper = {
+  title: string;
+  firstCollection: string;
+  secondCollection: string;
+  thirdCollection: string;
+  firstCollectionItems: {
+    productWithVariant: SanityProductWithVariant;
+  }[];
+  secondCollectionItems: {
+    productWithVariant: SanityProductWithVariant;
+  }[];
+  thirdCollectionItems: {
+    productWithVariant: SanityProductWithVariant;
+  }[];
+};
+
+export type SanityModuleStackHighlight = {
+  title: string;
 };
 
 export type SanityModuleImage =
@@ -304,6 +345,12 @@ export type SanityProductWithVariant = {
   available: boolean;
   gid: string;
   slug?: string;
+  image: string;
+  title: string;
+  price: {
+    minVariantPrice: number;
+    maxVariantPrice: number;
+  };
   variantGid: string;
 };
 
@@ -368,6 +415,26 @@ export type SanityFaq = {
 export type SanityFaqs = {
   groups: SanityFaq[];
   _type: "module.accordion";
+};
+
+export type SanityModuleHomeArticles = {
+  _id: string;
+  _key?: string;
+  _type: "module.homeArticles";
+  title: string;
+  articles: any;
+};
+
+export type SanityModuleProductHighlight = {
+  _id: string;
+  _key?: string;
+  _type: "module.productHighlight";
+  title: string;
+  backgroundImage: Image;
+  body: string;
+  textColor: string;
+  link?: SanityLink;
+  order?: "left" | "right";
 };
 
 export type SanityMaterial = {

@@ -1,6 +1,7 @@
 import groq from "groq";
 
 import { COLOR_THEME } from "./fragments/colorTheme";
+import { IMAGE } from "./fragments/image";
 import { LINKS } from "./fragments/links";
 import { PORTABLE_TEXT } from "./fragments/portableText/portableText";
 
@@ -9,6 +10,9 @@ export const LAYOUT_QUERY = groq`
     seo,
     "menuLinks": menu.links[] {
       ${LINKS}
+    },
+    siteLogo {
+      ${IMAGE}
     },
     footer {
       links[] {

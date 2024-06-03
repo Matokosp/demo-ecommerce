@@ -17,12 +17,12 @@ export default function CollectionCard({ collection, onClick }: Props) {
   if (!collection?.slug) {
     return null;
   }
-
+  // console.log(collection.vector?.url);
   return (
     <Link onClick={onClick} to={collection.slug}>
       <div
         className={clsx(
-          "group relative flex aspect-[4/3] items-center justify-center rounded bg-lightGray transition-[border-radius] duration-500 ease-out",
+          "group relative flex aspect-[4/3] items-center justify-center rounded transition-[border-radius] duration-500 ease-out",
           "hover:rounded-xl"
         )}
         style={{

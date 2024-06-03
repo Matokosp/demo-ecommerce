@@ -1,6 +1,7 @@
 import groq from "groq";
 
 import { COLOR_THEME } from "./colorTheme";
+import { IMAGE } from "./image";
 
 export const COLLECTION = groq`
   _id,
@@ -11,5 +12,8 @@ export const COLLECTION = groq`
   "gid": store.gid,
   "slug": "/collections/" + store.slug.current,
   "title": store.title,
-  "vector": vector.asset->url,
+  "descriptionHtml": store.descriptionHtml,
+  vector {
+    ${IMAGE}
+  },
 `;

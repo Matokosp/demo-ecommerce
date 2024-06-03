@@ -46,9 +46,9 @@ export default function Footer() {
   });
 
   return (
-    <footer className="-mt-overlap" role="contentinfo">
+    <footer className="-mt-overlap pl-16" role="contentinfo">
       {/* AVKA Footer */}
-      <div
+      {/* <div
         className={clsx(
           "align-start relative overflow-hidden rounded-xl bg-peach px-4 py-8", //
           "md:px-8 md:py-10"
@@ -82,10 +82,10 @@ export default function Footer() {
             )}
           />
         )}
-      </div>
+      </div> */}
 
       {/* Sanity Footer */}
-      <SanityFooter />
+      {/* <SanityFooter /> */}
     </footer>
   );
 }
