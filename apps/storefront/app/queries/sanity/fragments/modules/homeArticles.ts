@@ -1,14 +1,49 @@
 import groq from "groq";
 
-import { ARTICLE_PAGE } from "../pages/article";
+import { IMAGE } from "../image";
+import { LINK_EXTERNAL } from "../linkExternal";
+import { LINK_INTERNAL } from "../linkInternal";
+import { MARK_DEFS } from "../portableText/markDefs";
 
 export const MODULE_HOME_ARTICLES = groq`
   title,
-  "articles": *[_type == 'article'] {
+  description,
+  featured-> {
     _id,
-    title,
-    category->{
-      parent->
+    "title": coalesce(title[_key == $language][0].value),
+    slug
+  },
+  "articles": *[_type == 'article'] | order(_updatedAt desc) {
+    _id,
+    "title": coalesce(title[_key == $language][0].value),
+    image {
+      ${IMAGE}
+    },
+    tags[]->{
+      _id,
+      "title": coalesce(title[_key == $language][0].value),
+    },
+   "author": coalesce(author[_key == $language][0].value),
+   "time": coalesce(time[_key == $language][0].value),
+   "description": coalesce(description[_key == $language][0].value, 'en')[] {
+      ...,
+      markDefs[] {
+        ${MARK_DEFS}
+      }
     }
-  }[0]
+  },
+  firstImage {
+    ${IMAGE}
+  },
+  secondImage {
+    ${IMAGE}
+  },
+  "link": link[0] {
+    (_type == 'linkExternal') => {
+      ${LINK_EXTERNAL}
+    },
+    (_type == 'linkInternal') => {
+      ${LINK_INTERNAL}
+    },
+  },
   `;

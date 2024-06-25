@@ -102,7 +102,7 @@ export default function CollectionModule({ module }: Props) {
                 <motion.div
                   exit={{ opacity: 0, scale: 0.98 }}
                   initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1, transition: { delay: 0.3 } }}
+                  animate={{ opacity: 1, scale: 1, transition: { delay: 0.4 } }}
                   // eslint-disable-next-line react/no-array-index-key
                   key={product.productWithVariant._id + i}
                   className="col-span-3"

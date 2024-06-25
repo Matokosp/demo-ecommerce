@@ -56,7 +56,7 @@ export default defineField({
       name: 'language',
       title: 'Language',
       type: 'string',
-      hidden: true,
+      // hidden: true,
     }),
   ],
   preview: {

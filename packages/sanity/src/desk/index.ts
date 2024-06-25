@@ -5,6 +5,7 @@
 import {ListItemBuilder, StructureResolver} from 'sanity/desk'
 
 import article from './articles'
+import blogPostTag from './blogPostTag'
 import collections from './collections'
 import colorThemes from './colorThemes'
 import guides from './guides'
@@ -57,6 +58,7 @@ export const structure: StructureResolver = (S, context) =>
       collections(S, context),
       products(S, context),
       S.divider(),
+      blogPostTag(S, context),
       article(S, context),
       S.divider(),
       people(S, context),
@@ -66,9 +68,9 @@ export const structure: StructureResolver = (S, context) =>
       settings(S, context),
       S.divider(),
       // Automatically add new document types to the root pane
-      ...S.documentTypeListItems().filter(
-        (listItem: ListItemBuilder) =>
-          // @ts-expect-error Object is possibly 'undefined'
-          !DOCUMENT_TYPES_IN_STRUCTURE.includes(listItem.getId().toString())
-      ),
+      // ...S.documentTypeListItems().filter(
+      //   (listItem: ListItemBuilder) =>
+      //     // @ts-expect-error Object is possibly 'undefined'
+      //     !DOCUMENT_TYPES_IN_STRUCTURE.includes(listItem.getId().toString())
+      // ),
     ])

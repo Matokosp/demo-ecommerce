@@ -36,7 +36,6 @@ export default defineField({
       name: 'slug',
       type: 'slug',
       options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
-      // @ts-expect-error - TODO - fix this TS error
       validation: validateSlug,
     }),
     // Color theme
@@ -82,7 +81,7 @@ export default defineField({
       name: 'language',
       title: 'Language',
       type: 'string',
-      hidden: true,
+      hidden: false,
     }),
   ],
   preview: {

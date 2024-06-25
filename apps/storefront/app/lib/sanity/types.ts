@@ -22,10 +22,7 @@ export type SanityLayout = {
   seo: SanitySeo;
   menuLinks?: SanityMenuLink[];
   siteLogo?: { url: string };
-  footer?: {
-    links?: SanityLink[];
-    text?: PortableTextBlock[];
-  };
+  footer?: any;
   notFoundPage?: SanityNotFoundPage;
   labels?: SanityLabel[];
 };
@@ -422,7 +419,29 @@ export type SanityModuleHomeArticles = {
   _key?: string;
   _type: "module.homeArticles";
   title: string;
-  articles: any;
+  description: string;
+  featured: {
+    _id: string;
+    title: string;
+    slug: {
+      current: string;
+    };
+  };
+  articles: {
+    _id: string;
+    title: string;
+    image: SanityAssetImage;
+    tags: {
+      _id: string;
+      title: string;
+    }[];
+    author: string;
+    time: string;
+    description: PortableTextBlock[];
+  }[];
+  firstImage: Image;
+  secondImage: Image;
+  link: SanityLink;
 };
 
 export type SanityModuleProductHighlight = {

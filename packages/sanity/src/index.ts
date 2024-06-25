@@ -7,6 +7,7 @@ import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {taxonomyManager} from 'sanity-plugin-taxonomy-manager'
 
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
@@ -70,7 +71,7 @@ export function defineSanityConfig(config: SanityConfig) {
       visionTool(),
       documentInternationalization({
         supportedLanguages: LANGUAGES,
-        schemaTypes: ['guide', 'page', 'article'],
+        schemaTypes: ['guide', 'page'],
       }),
       internationalizedArray({
         languages: LANGUAGES,
@@ -80,7 +81,7 @@ export function defineSanityConfig(config: SanityConfig) {
       }),
       languageFilter({
         supportedLanguages: LANGUAGES,
-        documentTypes: ['collection', 'material', 'product', 'person', 'article'],
+        documentTypes: ['collection', 'material', 'product', 'person', 'article', 'blogPostTag'],
         filterField: (enclosingType, member, selectedLanguageIds) => {
           // Filter internationalized arrays
           if (

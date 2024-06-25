@@ -7,12 +7,47 @@ export default defineField({
   type: 'object',
   icon: BlockElementIcon,
   fields: [
-    // First Collection
+    // Title
     defineField({
       name: 'title',
       title: 'Title',
       type: 'text',
+      rows: 2,
       validation: (rule) => rule.required(),
+    }),
+    // Description
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'text',
+      rows: 8,
+      validation: (rule) => rule.required(),
+    }),
+    // Select featured
+    defineField({
+      name: 'featured',
+      title: 'Featured Article',
+      type: 'reference',
+      to: [{type: 'article'}],
+    }),
+    // Featured images
+    defineField({
+      name: 'firstImage',
+      title: 'First Featured Image',
+      type: 'image',
+    }),
+    defineField({
+      name: 'secondImage',
+      title: 'Second Featured Image',
+      type: 'image',
+    }),
+    // Link
+    defineField({
+      name: 'link',
+      title: 'CTA Link',
+      type: 'array',
+      of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+      validation: (rule) => rule.max(1),
     }),
   ],
   preview: {
@@ -24,8 +59,8 @@ export default defineField({
     prepare(selection) {
       return {
         media: BlockElementIcon,
-        subtitle: 'Collection Swiper',
-        title: 'Collection items swiper',
+        subtitle: 'Home Articles',
+        title: 'Featured article and carousel',
       }
     },
   },

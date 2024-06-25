@@ -39,6 +39,7 @@ export default function InstagramModule({
                 : "col-start-2 col-end-5"
             }`}
             key={text}
+            style={{ color: textColor }}
           >
             {text}
           </h3>
@@ -58,7 +59,11 @@ export default function InstagramModule({
             order === "right" ? "col-span-5" : "col-start-8 col-end-13"
           }`}
         >
-          <LinkButton layout="spread" link={link} />
+          <LinkButton
+            layout="spread"
+            link={link}
+            tone={textColor === "white" ? "invert" : "default"}
+          />
         </div>
       )}
     </Section>

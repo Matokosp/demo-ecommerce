@@ -1,6 +1,8 @@
 import {DocumentIcon} from '@sanity/icons'
 import {defineField} from 'sanity'
 
+import {isUniqueOtherThanLanguage, validateSlug} from '../../utils/validateSlug'
+
 export default defineField({
   name: 'article',
   title: 'Article',
@@ -18,6 +20,14 @@ export default defineField({
     },
   ],
   fields: [
+    {
+      title: 'Category',
+      name: 'tags',
+      type: 'array',
+      of: [{type: 'reference', to: {type: 'blogPostTag'}}],
+      validation: (Rule) => Rule.required().min(1),
+      group: 'editorial',
+    },
     // Name
     defineField({
       name: 'title',
@@ -28,9 +38,30 @@ export default defineField({
     defineField({
       name: 'slug',
       type: 'slug',
-      options: {source: 'title'},
+      options: {source: 'title', isUnique: isUniqueOtherThanLanguage},
+      validation: validateSlug,
       group: 'editorial',
-      validation: (rule) => rule.required(),
+    }),
+    // Description
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'internationalizedArraySimpleBlockContent',
+      group: 'editorial',
+    }),
+    // Author
+    defineField({
+      name: 'author',
+      title: 'Author',
+      type: 'internationalizedArrayString',
+      group: 'editorial',
+    }),
+    // Estimated time
+    defineField({
+      name: 'time',
+      title: 'Estimated time',
+      type: 'internationalizedArrayString',
+      group: 'editorial',
     }),
     // Image
     defineField({
@@ -55,11 +86,18 @@ export default defineField({
   ],
   preview: {
     select: {
+      active: 'active',
+      seoImage: 'seo.image',
       title: 'title',
+      language: 'language',
     },
-    prepare({title}) {
+    prepare(selection) {
+      const {seoImage, title, language} = selection
+
       return {
-        title: title?.[0]?.value,
+        media: seoImage,
+        title: title[0].value,
+        subtitle: language?.toUpperCase(),
       }
     },
   },

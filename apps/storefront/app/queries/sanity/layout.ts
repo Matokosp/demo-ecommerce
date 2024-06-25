@@ -15,12 +15,24 @@ export const LAYOUT_QUERY = groq`
       ${IMAGE}
     },
     footer {
-      links[] {
+      subscribeText,
+      columnOneTitle,
+      columnTwoTitle,
+      columnThreeTitle,
+      linksOne[] {
         ${LINKS}
       },
-      text[]{
-        ${PORTABLE_TEXT}
+      linksTwo[] {
+        ${LINKS}
       },
+      linksThree[] {
+        ${LINKS}
+      },
+      bottomLinks[] {
+        ${LINKS}
+      },
+      "legend": coalesce(legend[_key == $language][0].value, legend[_key == $baseLanguage][0].value),
+      "copyright": coalesce(copyright[_key == $language][0].value, copyright[_key == $baseLanguage][0].value),
     },
     notFoundPage {
       body,

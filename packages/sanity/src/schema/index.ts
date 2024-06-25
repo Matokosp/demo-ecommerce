@@ -13,6 +13,7 @@ const annotations = [
 
 // Document types
 import article from './documents/articles'
+import blogPostTag from './documents/blogPostTag'
 import collection from './documents/collection'
 import colorTheme from './documents/colorTheme'
 import guide from './documents/guide'
@@ -32,6 +33,7 @@ const documents = [
   productVariant,
   person,
   article,
+  blogPostTag,
 ]
 
 // Singleton document types

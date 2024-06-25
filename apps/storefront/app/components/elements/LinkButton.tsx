@@ -5,8 +5,9 @@ import type { SanityLink } from "~/lib/sanity";
 
 import { Arrow } from "./Icons";
 
-type ButtonMode = "default" | "outline";
+type ButtonMode = "default" | "outline" | "centered";
 type ButtonTone = "critical" | "default" | "shopPay" | "invert";
+type ButtonLayout = "spread" | "default";
 
 type ButtonStyleOptions = {
   mode?: ButtonMode;
@@ -18,9 +19,10 @@ type Props = {
   className?: string;
   link: SanityLink;
   textColor?: string;
-  mode?: "default" | "outline";
-  tone?: "critical" | "default" | "shopPay" | "invert";
-  layout?: "spread" | "default";
+  mode?: ButtonMode;
+  tone?: ButtonTone;
+  layout?: ButtonLayout;
+  noIcon?: boolean;
 };
 
 export const defaultButtonStyles = (options?: ButtonStyleOptions) => {
@@ -32,6 +34,7 @@ export const defaultButtonStyles = (options?: ButtonStyleOptions) => {
     "disabled:opacity-20 disabled:bg-opacity-100",
     mode === "default" &&
       clsx([
+        tone === "invert" && "border-color-limestone !text-black bg-limestone",
         tone === "critical" && "bg-red",
         tone === "default" && "bg-black",
         tone === "shopPay" && "bg-shopPay",
@@ -46,6 +49,12 @@ export const defaultButtonStyles = (options?: ButtonStyleOptions) => {
         "bg-transparent border",
         "hover:bg-black hover:text-limestone hover:border-black",
       ]),
+    mode === "centered" &&
+      clsx([
+        "justify-center",
+        tone === "default" &&
+          "border-color-offBlack text-white bg-black hover:bg-blackOpacity hover:text-limestone hover:border-blackOpacity",
+      ]),
   ]);
 };
 
@@ -57,6 +66,7 @@ export default function LinkButton({
   mode,
   tone,
   layout,
+  noIcon,
 }: Props) {
   if (!link.title) {
     return null;
@@ -70,15 +80,28 @@ export default function LinkButton({
           tone: tone ?? "default",
         }),
         className,
-        layout === "spread" ? "flex w-full justify-between" : ""
+        layout === "spread" && mode !== "centered"
+          ? "flex w-full justify-between"
+          : mode === "centered"
+          ? "flex w-full justify-center"
+          : ""
       )}
       link={link}
       style={{ background: backgroundColor, color: textColor }}
     >
       <span>{layout === "spread" ? link.title.split("|")[0] : link.title}</span>
-      <span className="ml-6 flex items-center gap-x-4 transition-all">
+      <span
+        className={`${
+          mode !== "centered" && "ml-6"
+        } flex items-center gap-x-4 transition-all`}
+      >
         {layout === "spread" && <span>{link.title.split("|")[1]}</span>}
-        <Arrow fill={mode === "outline" ? "black" : "white"} />
+        {!noIcon && (
+          <Arrow
+            invert={tone === "invert"}
+            fill={mode === "outline" || tone === "invert" ? "black" : "white"}
+          />
+        )}
       </span>
     </Link>
   );

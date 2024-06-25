@@ -25,7 +25,7 @@ export default function Header() {
       className={clsx(
         "align-center h-svh fixed top-0 z-40 flex h-screen w-[60px] flex-col",
         "md:px-8",
-        ""
+        "border-r-[1px] border-[rgba(0,0,0,0.1)]"
       )}
       role="banner"
     >

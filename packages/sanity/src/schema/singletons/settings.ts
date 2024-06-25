@@ -120,49 +120,71 @@ export default defineType({
         collapsible: true,
       },
       fields: [
+        defineField({
+          name: 'subscribeText',
+          title: 'Subscribe Text',
+          type: 'text',
+        }),
+        //Column One Links Title
+        defineField({
+          name: 'columnOneTitle',
+          title: 'Column one title',
+          type: 'text',
+          rows: 2,
+        }),
         // Links
         defineField({
-          name: 'links',
-          title: 'Links',
+          name: 'linksOne',
+          title: 'Links Column One',
           type: 'array',
           of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
         }),
-        // Text
+        //Column Two Links Title
         defineField({
-          name: 'text',
-          title: 'Text',
+          name: 'columnTwoTitle',
+          title: 'Column two title',
+          type: 'text',
+          rows: 2,
+        }),
+        // Links
+        defineField({
+          name: 'linksTwo',
+          title: 'Links Column Two',
           type: 'array',
-          of: [
-            {
-              lists: [],
-              marks: {
-                annotations: [
-                  // Email
-                  {
-                    title: 'Email',
-                    name: 'annotationLinkEmail',
-                    type: 'annotationLinkEmail',
-                  },
-                  // Internal link
-                  {
-                    title: 'Internal page',
-                    name: 'annotationLinkInternal',
-                    type: 'annotationLinkInternal',
-                  },
-                  // URL
-                  {
-                    title: 'URL',
-                    name: 'annotationLinkExternal',
-                    type: 'annotationLinkExternal',
-                  },
-                ],
-                decorators: [],
-              },
-              // Block styles
-              styles: [{title: 'Normal', value: 'normal'}],
-              type: 'block',
-            },
-          ],
+          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+        }),
+        //Column Three Links Title
+        defineField({
+          name: 'columnThreeTitle',
+          title: 'Column three title',
+          type: 'text',
+          rows: 2,
+        }),
+        // Links
+        defineField({
+          name: 'linksThree',
+          title: 'Links Column Three',
+          type: 'array',
+          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+        }),
+        // Links
+        defineField({
+          name: 'bottomLinks',
+          title: 'Bottom Links',
+          type: 'array',
+          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+        }),
+        // Legend
+        defineField({
+          name: 'legend',
+          title: 'Legend',
+          type: 'internationalizedArrayString',
+        }),
+        // copyright
+        defineField({
+          name: 'copyright',
+          title: 'Copyright',
+          type: 'internationalizedArrayString',
         }),
       ],
     }),
