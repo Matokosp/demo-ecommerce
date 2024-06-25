@@ -39,6 +39,9 @@ export default defineField({
         {type: 'module.image'},
         {type: 'module.instagram'},
         {type: 'module.product'},
+        {type: 'module.productHighlight'},
+        {type: 'module.collectionsSwiper'},
+        {type: 'module.homeArticles'},
       ],
       group: 'editorial',
     }),
@@ -53,7 +56,7 @@ export default defineField({
       name: 'language',
       title: 'Language',
       type: 'string',
-      hidden: true,
+      // hidden: true,
     }),
   ],
   preview: {

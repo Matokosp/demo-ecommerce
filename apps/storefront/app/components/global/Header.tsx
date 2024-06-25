@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useState } from "react";
 
 import HeaderActions from "~/components/global/HeaderActions";
 import HeaderBackground from "~/components/global/HeaderBackground";
@@ -12,21 +13,39 @@ import { useRootLoaderData } from "~/root";
 export default function Header() {
   const { layout } = useRootLoaderData();
   const { menuLinks } = layout || {};
+  const { siteLogo } = layout;
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleClose = () => setIsOpen(false);
+  const handleOpen = () => setIsOpen(true);
 
   return (
     <header
       className={clsx(
-        "align-center fixed top-0 z-40 flex h-header-sm w-full px-4",
+        "align-center h-svh fixed top-0 z-40 flex h-screen w-[60px] flex-col",
         "md:px-8",
-        "lg:h-header-lg"
+        "border-r-[1px] border-[rgba(0,0,0,0.1)]"
       )}
       role="banner"
     >
-      <HeaderBackground />
+      <HeaderBackground
+        logo={siteLogo}
+        handleOpen={handleOpen}
+        isOpen={isOpen}
+      />
       {menuLinks && <MobileNavigation menuLinks={menuLinks} />}
-      {menuLinks && <Navigation menuLinks={menuLinks} />}
+      {menuLinks && (
+        <Navigation
+          menuLinks={menuLinks}
+          handleClose={handleClose}
+          isOpen={isOpen}
+        />
+      )}
       {/* Accounts, country selector + cart toggle */}
-      <HeaderActions />
+      <div className="fixed right-0 top-10">
+        <HeaderActions />
+      </div>
     </header>
   );
 }

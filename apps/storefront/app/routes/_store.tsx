@@ -5,6 +5,7 @@ import {
   type LoaderFunctionArgs,
 } from "@shopify/remix-oxygen";
 import { getPreview, PreviewProvider } from "hydrogen-sanity";
+import swiperCss from "swiper/css";
 
 import { Layout } from "~/components/global/Layout";
 import { PreviewLoading } from "~/components/global/PreviewLoading";
@@ -12,6 +13,10 @@ import stylesheet from "~/styles/tailwind.css";
 
 export const links: LinksFunction = () => {
   return [
+    {
+      rel: "stylesheet",
+      href: swiperCss,
+    },
     { rel: "stylesheet", href: stylesheet },
     {
       href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,500;0,700;1,500;1,700&display=swap",

@@ -73,7 +73,7 @@ export default function CollectionGroupContent({
   return (
     <div className="pb-10">
       {/* Header */}
-      <header
+      {/* <header
         className={clsx(
           "flex h-header-sm items-center justify-between px-8",
           "lg:h-header-lg"
@@ -85,18 +85,18 @@ export default function CollectionGroupContent({
         <button type="button" onClick={onClose}>
           <CloseIcon />
         </button>
-      </header>
+      </header> */}
 
       {/* Collections */}
-      <div className="px-8">
+      {/* <div className="px-8">
         <div className="text-lg font-bold">Collections</div>
         <div className="relative mt-3 grid grid-cols-2 gap-2">
           {renderCollections()}
         </div>
-      </div>
+      </div> */}
 
       {/* Collection products */}
-      {collection && (
+      {/* {collection && (
         <div className="mt-8 px-8" ref={ref}>
           {products ? (
             <>
@@ -121,7 +121,7 @@ export default function CollectionGroupContent({
             </>
           )}
         </div>
-      )}
+      )} */}
     </div>
   );
 }

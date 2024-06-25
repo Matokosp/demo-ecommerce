@@ -15,7 +15,8 @@ module.exports = {
       DEFAULT: "0px 0px 4px rgba(0, 0, 0, 0.1)",
     },
     fontFamily: {
-      sans: '"DM Sans", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+      sans: '"Exposure", Roboto',
+      serif: ['"Exposure"'],
     },
     fontSize: {
       // 12px
@@ -110,9 +111,11 @@ module.exports = {
         gray: "#E7E7E7",
         lightGray: "#F3F3F3",
         offBlack: "#2B2E2E",
+        blackOpacity: "#53514B",
         peach: "#FFE1D1",
         red: "#EC5039",
         shopPay: "#5A31F4",
+        limestone: "#FBFBF6",
       },
       height: {
         "header-sm": "4.375rem",

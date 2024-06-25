@@ -4,6 +4,7 @@ import ImageWithProductHotspots from "~/components/media/ImageWithProductHotspot
 import ProductHero from "~/components/product/ProductHero";
 import type {
   SanityImageWithProductHotspots,
+  // SanityProductHighlight,
   SanityProductWithVariant,
 } from "~/lib/sanity";
 

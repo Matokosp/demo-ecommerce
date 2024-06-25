@@ -1,6 +1,7 @@
 import groq from "groq";
 
 import { COLOR_THEME } from "./fragments/colorTheme";
+import { IMAGE } from "./fragments/image";
 import { LINKS } from "./fragments/links";
 import { PORTABLE_TEXT } from "./fragments/portableText/portableText";
 
@@ -10,13 +11,28 @@ export const LAYOUT_QUERY = groq`
     "menuLinks": menu.links[] {
       ${LINKS}
     },
+    siteLogo {
+      ${IMAGE}
+    },
     footer {
-      links[] {
+      subscribeText,
+      columnOneTitle,
+      columnTwoTitle,
+      columnThreeTitle,
+      linksOne[] {
         ${LINKS}
       },
-      text[]{
-        ${PORTABLE_TEXT}
+      linksTwo[] {
+        ${LINKS}
       },
+      linksThree[] {
+        ${LINKS}
+      },
+      bottomLinks[] {
+        ${LINKS}
+      },
+      "legend": coalesce(legend[_key == $language][0].value, legend[_key == $baseLanguage][0].value),
+      "copyright": coalesce(copyright[_key == $language][0].value, copyright[_key == $baseLanguage][0].value),
     },
     notFoundPage {
       body,

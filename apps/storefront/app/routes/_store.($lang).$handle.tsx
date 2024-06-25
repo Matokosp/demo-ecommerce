@@ -1,3 +1,5 @@
+// app/routes/_store.($lang).$handle.tsx
+
 import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { SeoHandleFunction } from "@shopify/hydrogen";
 import {
@@ -12,7 +14,7 @@ import invariant from "tiny-invariant";
 
 import PageHero from "~/components/heroes/Page";
 import PortableText from "~/components/portableText/PortableText";
-import { baseLanguage } from "~/data/countries";
+import { baseLanguage, countries } from "~/data/countries";
 import type { SanityHeroPage, SanityPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";

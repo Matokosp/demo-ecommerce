@@ -1,5 +1,6 @@
 import groq from "groq";
 
+import { IMAGE } from "../image";
 import { IMAGE_WITH_PRODUCT_HOTSPOTS } from "../imageWithProductHotspots";
 import { LINK_EXTERNAL } from "../linkExternal";
 import { LINK_INTERNAL } from "../linkInternal";
@@ -23,5 +24,10 @@ export const HERO_HOME = groq`
       ${LINK_INTERNAL}
     },
   },
-  title
+  title,
+  color,
+  heroImage {
+    ${IMAGE}
+  },
+  textContent
 `;

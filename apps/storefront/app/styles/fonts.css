@@ -1,0 +1,5 @@
+@font-face {
+  font-family: "ExposureVar";
+  src: url("./fonts/ExposureTrialVAR-Exposure.woff") format(woff),
+    url("./fonts/ExposureTrialVAR-Exposure.woff2") format(woff2);
+}

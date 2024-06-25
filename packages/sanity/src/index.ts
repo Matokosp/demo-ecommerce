@@ -7,6 +7,7 @@ import {deskTool} from 'sanity/desk'
 import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
 import {media, mediaAssetSource} from 'sanity-plugin-media'
+import {taxonomyManager} from 'sanity-plugin-taxonomy-manager'
 
 import Logo from './components/studio/Logo'
 import Navbar from './components/studio/Navbar'
@@ -40,8 +41,10 @@ export function defineSanityConfig(config: SanityConfig) {
   /**
    * Prevent a consumer from importing into a worker/server bundle.
    */
-  if(typeof document === 'undefined') {
-    throw new Error('Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.')
+  if (typeof document === 'undefined') {
+    throw new Error(
+      'Sanity Studio can only run in the browser. Please check that this file is not being imported into a worker or server bundle.'
+    )
   }
 
   const {title = 'AKVA', preview, shopify, ...rest} = config
@@ -78,7 +81,7 @@ export function defineSanityConfig(config: SanityConfig) {
       }),
       languageFilter({
         supportedLanguages: LANGUAGES,
-        documentTypes: ['collection', 'material', 'product', 'person'],
+        documentTypes: ['collection', 'material', 'product', 'person', 'article', 'blogPostTag'],
         filterField: (enclosingType, member, selectedLanguageIds) => {
           // Filter internationalized arrays
           if (

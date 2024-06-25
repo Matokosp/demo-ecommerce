@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge";
 import { Link } from "~/components/Link";
 
 type ButtonMode = "default" | "outline";
-type ButtonTone = "critical" | "default" | "shopPay";
+type ButtonTone = "critical" | "default" | "shopPay" | "invert";
 
 type RemixLinkPropsOptional = Omit<RemixLinkProps, "to"> & {
   to?: RemixLinkProps["to"];
@@ -32,8 +32,9 @@ export const defaultButtonStyles = (options?: ButtonStyleOptions) => {
   const tone: ButtonTone = options?.tone || "default";
 
   return clsx([
-    "flex h-[2.5rem] items-center justify-center overflow-hidden rounded-full p-4 text-sm font-bold duration-200 ease-out",
+    "inline-flex h-[2.5rem] rounded-full items-center justify-center overflow-hidden p-4 text-md font-semibold duration-200 ease-out group",
     "disabled:opacity-20 disabled:bg-opacity-100",
+    "hover:bg-black hover:bg-opacity-100",
     mode === "default" &&
       clsx([
         tone === "critical" && "bg-red",
@@ -43,10 +44,12 @@ export const defaultButtonStyles = (options?: ButtonStyleOptions) => {
       ]),
     mode === "outline" &&
       clsx([
+        tone === "invert" && "border-color-limestone text-limestone",
         tone === "critical" && "border-color-red text-red",
         tone === "default" && "border-color-offBlack text-offBlack",
         tone === "shopPay" && "border-color-shopPay text-shopPay",
-        "bg-transparent border hover:opacity-50",
+        "bg-transparent border",
+        "hover:bg-black hover:text-limestone hover:border-black hover:font-bold",
       ]),
   ]);
 };

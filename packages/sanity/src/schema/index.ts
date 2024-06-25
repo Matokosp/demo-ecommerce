@@ -12,6 +12,8 @@ const annotations = [
 ]
 
 // Document types
+import article from './documents/articles'
+import blogPostTag from './documents/blogPostTag'
 import collection from './documents/collection'
 import colorTheme from './documents/colorTheme'
 import guide from './documents/guide'
@@ -21,7 +23,18 @@ import person from './documents/person'
 import product from './documents/product'
 import productVariant from './documents/productVariant'
 
-const documents = [collection, colorTheme, guide, material, page, product, productVariant, person]
+const documents = [
+  collection,
+  colorTheme,
+  guide,
+  material,
+  page,
+  product,
+  productVariant,
+  person,
+  article,
+  blogPostTag,
+]
 
 // Singleton document types
 import home from './singletons/home'
@@ -52,11 +65,14 @@ import moduleAccordion from './objects/module/accordion'
 import moduleCallout from './objects/module/callout'
 import moduleCallToAction from './objects/module/callToAction'
 import moduleCollection from './objects/module/collection'
+import moduleCollectionsSwiper from './objects/module/collectionsSwiper'
 import moduleGrid from './objects/module/grid'
+import homeArticles from './objects/module/homeArticles'
 import moduleImage from './objects/module/image'
 import moduleImages from './objects/module/images'
 import moduleInstagram from './objects/module/instagram'
 import moduleProduct from './objects/module/product'
+import moduleProductHighlight from './objects/module/productHighlight'
 import moduleProducts from './objects/module/products'
 import moduleTaggedProducts from './objects/module/taggedProducts'
 import placeholderString from './objects/placeholderString'
@@ -88,7 +104,9 @@ const objects = [
   moduleCallout,
   moduleCallToAction,
   moduleCollection,
+  moduleCollectionsSwiper,
   moduleGrid,
+  homeArticles,
   moduleImage,
   moduleImages,
   moduleInstagram,
@@ -107,6 +125,7 @@ const objects = [
   shopifyCollectionRule,
   shopifyProduct,
   shopifyProductVariant,
+  moduleProductHighlight,
 ]
 
 export const types = [...annotations, ...documents, ...singletons, ...objects, ...blocks]

@@ -5,6 +5,8 @@ import ProductCard from "~/components/product/Card";
 import type { SanityModule } from "~/lib/sanity";
 import type { ProductWithNodes } from "~/types/shopify";
 
+import { Section } from "../layout/Section";
+
 // Sanity modules to render in full width (across all grid columns)
 const FULL_WIDTH_MODULE_TYPES: SanityModule["_type"][] = [
   "module.callout",
@@ -94,7 +96,7 @@ type Props = {
 
 export default function ModuleGrid({ items }: Props) {
   return (
-    <ul className="grid grid-cols-1 gap-x-[7.5vw] gap-y-[7.5vw] md:grid-cols-2">
+    <>
       {items.map((item, index) => {
         const productLayout = PRODUCT_LAYOUT[index % PRODUCT_LAYOUT.length];
         const productImageAspect = CLASSES.imageAspect[productLayout.aspect];
@@ -106,45 +108,29 @@ export default function ModuleGrid({ items }: Props) {
         ]);
 
         if (isModule(item)) {
-          const isProductModule = item._type === "module.product";
-
           // Render modules
           return (
-            <li
-              className={clsx([
-                "flex overflow-hidden",
-                isProductModule
-                  ? productLayoutClasses
-                  : "items-center justify-center",
-                FULL_WIDTH_MODULE_TYPES.includes(item._type)
-                  ? "md:col-span-2"
-                  : "md:col-span-1",
-              ])}
+            <Module
               key={item._key}
-            >
-              <div className={clsx(isProductModule ? productWidth : "w-full")}>
-                <Module
-                  imageAspectClassName={productImageAspect}
-                  module={item}
-                />
-              </div>
-            </li>
+              imageAspectClassName={productImageAspect}
+              module={item}
+            />
           );
         } else {
           // Render product cards
           return (
-            <li className={productLayoutClasses} key={item.id}>
+            <section className={productLayoutClasses} key={item.id}>
               <div className={productWidth}>
                 <ProductCard
                   imageAspectClassName={productImageAspect}
                   storefrontProduct={item}
                 />
               </div>
-            </li>
+            </section>
           );
         }
       })}
-    </ul>
+    </>
   );
 }
 
