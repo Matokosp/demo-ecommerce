@@ -24,7 +24,12 @@ export default async function handleRequest(
       "https://cdn.sanity.io",
       "https://lh3.googleusercontent.com",
     ],
-    styleSrc: [`'self'`, `'unsafe-inline'`, "https://fonts.googleapis.com"],
+    styleSrc: [
+      `'self'`,
+      `'unsafe-inline'`,
+      "https://fonts.googleapis.com",
+      "https://cdn.shopify.com",
+    ],
     scriptSrc: [`'self'`, "www.instagram.com"],
     fontSrc: [`'self'`, "https://fonts.gstatic.com"],
     frameAncestors: [`'self'`],

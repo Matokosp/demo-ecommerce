@@ -115,10 +115,10 @@ export default function App() {
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
-        <meta
+        {/* <meta
           httpEquiv="Content-Security-Policy"
-          content="style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.shopify.com;"
-        ></meta>
+          content="base-uri 'self'; default-src 'self' 'nonce-5fce9e7e1bd6e93ea431bf8027370383' https://cdn.shopify.com https://shopify.com; frame-ancestors 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.shopify.com; connect-src 'self' https://monorail-edge.shopifysvc.com https://354orjeo.api.sanity.io wss://354orjeo.api.sanity.io; img-src 'self' https://cdn.shopify.com https://cdn.sanity.io https://lh3.googleusercontent.com; script-src 'self' www.instagram.com 'nonce-5fce9e7e1bd6e93ea431bf8027370383'; font-src 'self' https://fonts.gstatic.com; frame-src 'self' https://www.instagram.com"
+        ></meta> */}
         <Seo />
         <Meta />
         <Links />
