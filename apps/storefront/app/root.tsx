@@ -115,6 +115,10 @@ export default function App() {
     <html lang={locale.language}>
       <head>
         <meta charSet="utf-8" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.shopify.com;"
+        ></meta>
         <Seo />
         <Meta />
         <Links />
