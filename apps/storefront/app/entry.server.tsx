@@ -30,11 +30,11 @@ export default async function handleRequest(
       "https://fonts.googleapis.com",
       "https://cdn.shopify.com",
     ],
-    scriptSrc: [
-      `'self'`,
-      "www.instagram.com",
-      `nonce-14a195791d4485262cd3a28aaaa354a4`,
-    ],
+    // scriptSrc: [
+    //   `'self'`,
+    //   "www.instagram.com",
+    //   `nonce-14a195791d4485262cd3a28aaaa354a4`,
+    // ],
     fontSrc: [
       `'self'`,
       "https://fonts.gstatic.com",
