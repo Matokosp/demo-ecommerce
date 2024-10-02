@@ -5,6 +5,7 @@ import { LINK_EXTERNAL } from "../linkExternal";
 import { LINK_INTERNAL } from "../linkInternal";
 
 export const MODULE_PRODUCT_HIGHLIGHT = groq`
+  sectionTitle,
   title,
   body,
   textColor,

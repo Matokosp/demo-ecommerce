@@ -65,9 +65,29 @@ export default defineField({
     }),
     // Body
     defineField({
+      name: 'bodyTitle',
+      title: 'Body title',
+      type: 'text',
+      group: 'editorial',
+    }),
+    // Body
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'body',
+      group: 'editorial',
+    }),
+    // Modules
+    defineField({
+      name: 'modules',
+      title: 'Modules',
+      type: 'array',
+      of: [
+        {type: 'module.featuredArticle'},
+        {type: 'module.articleArchive'},
+        {type: 'module.productShowcase'},
+        {type: 'module.floatingTexts'},
+      ],
       group: 'editorial',
     }),
     // SEO

@@ -1,4 +1,3 @@
-import type { PortableTextBlock } from "@portabletext/types";
 import { Await, useLoaderData, useParams } from "@remix-run/react";
 import type { ShopifyAnalyticsPayload } from "@shopify/hydrogen";
 import {
@@ -26,12 +25,18 @@ import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 import invariant from "tiny-invariant";
 
+import { Breadcrumb } from "~/components/elements/Breadcrumb";
+import { Footer } from "~/components/global/Footer";
 import { Label } from "~/components/global/Label";
-import AccordionBlock from "~/components/portableText/blocks/Accordion";
+import { Section } from "~/components/layout/Section";
+import { ProductShowcase } from "~/components/modules/ProductShowcase";
 import PortableText from "~/components/portableText/PortableText";
 import ProductDetails from "~/components/product/Details";
+import ProductForm from "~/components/product/Form";
+import ProductGalleryVertical from "~/components/product/GalleryVertical";
 import Magazine from "~/components/product/Magazine";
-import RelatedProducts from "~/components/product/RelatedProducts";
+import { ArticleGallery } from "~/components/sections/ArticleGallery";
+import { ProductBenefits } from "~/components/sections/ProductBenefits";
 import { baseLanguage } from "~/data/countries";
 import type { SanityFaqs, SanityProductPage } from "~/lib/sanity";
 import { ColorTheme } from "~/lib/theme";
@@ -74,6 +79,8 @@ export const handle = {
 export async function loader({ params, context, request }: LoaderFunctionArgs) {
   validateLocale({ context, params });
   const language = context.storefront.i18n.language.toLowerCase();
+
+  const lang = context.storefront.i18n;
 
   const { handle } = params;
   invariant(handle, "Missing handle param, check route filename");
@@ -129,11 +136,11 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
   });
 
   // Get recommended products from Shopify
-  const recommended = context.storefront.query(RECOMMENDED_PRODUCTS_QUERY, {
-    variables: {
-      productId: product.id,
-    },
-  });
+  // const recommended = context.storefront.query(RECOMMENDED_PRODUCTS_QUERY, {
+  //   variables: {
+  //     productId: product.id,
+  //   },
+  // });
 
   const firstVariant = product.variants.nodes[0];
   const selectedVariant = product.selectedVariant ?? firstVariant;
@@ -149,12 +156,13 @@ export async function loader({ params, context, request }: LoaderFunctionArgs) {
 
   return defer({
     language,
+    lang,
     page,
     product,
     variants,
     gids,
     selectedVariant,
-    recommended,
+    // recommended,
     analytics: {
       pageType: AnalyticsPageType.product,
       resourceId: product.id,
@@ -184,15 +192,29 @@ function redirectToFirstVariant({
 export default function ProductHandle() {
   const {
     language,
+    lang,
     page,
     product,
     variants,
     selectedVariant,
     analytics,
-    recommended,
     gids,
   } = useLoaderData<typeof loader>();
   const { handle } = useParams();
+
+  const langPrefix =
+    lang.language.toLowerCase() + "-" + lang.country.toLowerCase();
+
+  const pagePaths = [
+    {
+      slug: "/" + langPrefix + "/" + "products",
+      title: "Shop all",
+    },
+    {
+      slug: null,
+      title: product.collections.nodes[0].title,
+    },
+  ];
 
   return (
     <SanityPreview
@@ -203,6 +225,7 @@ export default function ProductHandle() {
       {(page) => (
         <ColorTheme value={page?.colorTheme}>
           <div className="relative w-full">
+            <Breadcrumb paths={pagePaths} colorTheme={page?.colorTheme} />
             <Suspense
               fallback={
                 <ProductDetails
@@ -216,118 +239,119 @@ export default function ProductHandle() {
             >
               <Await
                 errorElement="There was a problem loading related products"
-                resolve={variants}
+                resolve={[variants, gids]}
               >
                 {(resp) => (
-                  <ProductDetails
-                    selectedVariant={selectedVariant}
-                    sanityProduct={page as SanityProductPage}
-                    storefrontProduct={product}
-                    storefrontVariants={resp.product?.variants.nodes || []}
-                    analytics={analytics as ShopifyAnalyticsPayload}
-                  />
+                  <Section className="border-b-[1px] border-b-[rgba(0,0,0,0.1)] pt-0">
+                    <div className="col-span-12 h-full">
+                      <div className="flex w-full gap-x-[22px]">
+                        <div className="z-[-1] w-2/4 overflow-hidden">
+                          <ProductGalleryVertical
+                            storefrontProduct={product}
+                            selectedVariant={selectedVariant}
+                          />
+                        </div>
+                        <div className="sticky top-[185px] flex h-[calc(100vh-185px)] w-2/4 flex-col justify-between pb-[22px]">
+                          <ProductForm
+                            product={product}
+                            description={page?.body ? page.body : []}
+                            variants={product.variants.nodes || []}
+                            selectedVariant={selectedVariant}
+                            analytics={analytics as ShopifyAnalyticsPayload}
+                            customProductOptions={page?.customProductOptions}
+                            deliveryAndReturns={
+                              page?.sharedText?.deliveryAndReturns
+                            }
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </Section>
                 )}
               </Await>
             </Suspense>
 
             <Suspense>
               <Await resolve={gids}>
-                {/* Body */}
-                {page?.body && (
-                  <div
-                    className={clsx(
-                      "w-full", //
-                      "lg:w-[calc(100%-315px)]",
-                      "mb-10 mt-8 p-5"
-                    )}
-                  >
-                    <div className="grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                      <div className="hidden xl:block" />
-                      <div className="col-span-6 xl:col-span-5">
-                        <PortableText blocks={page.body} />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
                 {/* Magazine */}
                 <Magazine page={page as SanityProductPage} product={product} />
 
-                {/* Shipping info and FAQs */}
+                {/* Benefits */}
+                {page?.benefits && (
+                  <ProductBenefits benefits={page?.benefits} />
+                )}
+
+                {/* Related Articles */}
+                {page?.articles && (
+                  <ArticleGallery
+                    articles={page?.articles}
+                    text={page?.relatedArticlesText}
+                    relatedArticles
+                  />
+                )}
+
+                {/* FAQs */}
                 <div
                   className={clsx(
-                    "w-full", //
-                    "lg:w-[calc(100%-315px)]",
-                    "mb-10 mt-8 p-5"
+                    "mb-10 p-[18px]",
+                    "border-t-[1px] border-[rgba(0,0,0,0.1)]"
                   )}
                 >
-                  <div className="mb-10 grid grid-cols-3 gap-10 md:grid-cols-4 lg:grid-cols-6">
-                    <div className="hidden aspect-square xl:block" />
-                    <div className="col-span-3 md:col-span-4 lg:col-span-3 xl:col-span-2">
-                      {page?.sharedText?.deliveryAndReturns && (
-                        <SanityProductShipping
-                          blocks={page?.sharedText?.deliveryAndReturns}
-                        />
-                      )}
-                    </div>
-                    <div className="col-span-3 md:col-span-4 lg:col-span-3">
-                      {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
-                        <SanityProductFaqs faqs={page.faqs} />
-                      )}
-                    </div>
-                  </div>
+                  {page?.faqs?.groups && page?.faqs?.groups.length > 0 && (
+                    <SanityProductFaqs faqs={page.faqs} />
+                  )}
                 </div>
+
+                {/* Related products */}
+                {page?.relatedProducts && (
+                  <ProductShowcase
+                    module={{
+                      layout: "big",
+                      direction: "ltr",
+                      title: "Strength stacks",
+                      modules: page?.relatedProducts,
+                      image: undefined,
+                    }}
+                  />
+                )}
               </Await>
             </Suspense>
           </div>
 
-          {/* Related products */}
-          <Suspense>
-            <Await
-              errorElement="There was a problem loading related products"
-              resolve={recommended}
-            >
-              {(products) => (
-                <RelatedProducts
-                  relatedProducts={products.productRecommendations}
-                />
-              )}
-            </Await>
-          </Suspense>
+          {/* Footer */}
+          <Footer />
         </ColorTheme>
       )}
     </SanityPreview>
   );
 }
 
-const SanityProductShipping = ({ blocks }: { blocks: PortableTextBlock[] }) => {
-  return (
-    <>
-      <h2
-        className={clsx(
-          "first:mt-0 last:mb-0", //
-          "mb-6 mt-16 text-xl font-bold"
-        )}
-      >
-        <Label _key="shipping.shippingReturns" />
-      </h2>
-      <PortableText blocks={blocks} />
-    </>
-  );
-};
-
 const SanityProductFaqs = ({ faqs }: { faqs: SanityFaqs }) => {
   return (
-    <>
-      <h2
-        className={clsx(
-          "first:mt-0 last:mb-0", //
-          "-mb-6 mt-16 text-xl font-bold"
-        )}
-      >
+    <Section>
+      <h2 className={clsx("heading-1 col-span-12 mb-10")}>
         <Label _key="faqs.title" />
       </h2>
-      <AccordionBlock value={faqs} />
-    </>
+      {faqs.groups.map((faq) => {
+        return (
+          <div
+            key={faq._key}
+            className={clsx(
+              "col-span-4 mb-14 flex flex-col gap-y-6",
+              "xl:w-[calc(100%-54px)]"
+            )}
+          >
+            <div className="flex gap-x-8">
+              <p>Q</p>
+              <p>{faq.title}</p>
+            </div>
+            <div className="flex gap-x-8">
+              <p>A</p>
+              <PortableText blocks={faq.body} />
+            </div>
+          </div>
+        );
+      })}
+    </Section>
   );
 };

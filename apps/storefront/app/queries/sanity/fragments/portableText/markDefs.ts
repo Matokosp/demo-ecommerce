@@ -10,7 +10,10 @@ export const MARK_DEFS = groq`
 	  ${LINK_EXTERNAL}
 	},
 	(_type == 'annotationLinkInternal') => {
-	${LINK_INTERNAL}
+		${LINK_INTERNAL}
+	},
+	(_type == 'editorialReference') => {
+		reference[]
 	},
 	(_type == 'annotationProduct') => {
 	  linkAction,

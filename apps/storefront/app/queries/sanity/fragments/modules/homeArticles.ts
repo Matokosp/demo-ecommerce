@@ -3,34 +3,30 @@ import groq from "groq";
 import { IMAGE } from "../image";
 import { LINK_EXTERNAL } from "../linkExternal";
 import { LINK_INTERNAL } from "../linkInternal";
-import { MARK_DEFS } from "../portableText/markDefs";
 
 export const MODULE_HOME_ARTICLES = groq`
   title,
   description,
   featured-> {
     _id,
-    "title": coalesce(title[_key == $language][0].value),
-    slug
+    title,
+    slug,
+    documentType
   },
-  "articles": *[_type == 'article'] | order(_updatedAt desc) {
+  "articles": *[_type == 'article' && language == $language] | order(_updatedAt desc) {
     _id,
-    "title": coalesce(title[_key == $language][0].value),
+    title,
     image {
       ${IMAGE}
     },
+    slug,
     tags[]->{
       _id,
       "title": coalesce(title[_key == $language][0].value),
     },
-   "author": coalesce(author[_key == $language][0].value),
-   "time": coalesce(time[_key == $language][0].value),
-   "description": coalesce(description[_key == $language][0].value, 'en')[] {
-      ...,
-      markDefs[] {
-        ${MARK_DEFS}
-      }
-    }
+    preamble,
+    author,
+    time,
   },
   firstImage {
     ${IMAGE}

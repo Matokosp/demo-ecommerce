@@ -11,35 +11,63 @@ import { useRootLoaderData } from "~/root";
  * A server component that specifies the content of the header on the website
  */
 export default function Header() {
-  const { layout } = useRootLoaderData();
+  const { layout, selectedLocale, sanityDataset, sanityProjectID } =
+    useRootLoaderData();
+
   const { menuLinks } = layout || {};
-  const { siteLogo } = layout;
+  const {
+    siteLogo,
+    navigationLegend,
+    navigationLabels,
+    contentMenu,
+    allProducts,
+    journalLinks,
+    menuShipping,
+    shopImage,
+    journalImage,
+    latestArticles,
+  } = layout;
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClose = () => setIsOpen(false);
-  const handleOpen = () => setIsOpen(true);
+  const [isOpen, setIsOpen] = useState<number | null>(null);
+  const localePrefix =
+    selectedLocale.language.toLocaleLowerCase() +
+    "-" +
+    selectedLocale.country.toLocaleLowerCase();
 
   return (
     <header
       className={clsx(
-        "align-center h-svh fixed top-0 z-40 flex h-screen w-[60px] flex-col",
+        "align-center h-svh fixed top-0 z-40 flex h-screen w-[62px] flex-col",
         "md:px-8",
         "border-r-[1px] border-[rgba(0,0,0,0.1)]"
       )}
       role="banner"
+      onMouseLeave={() => setIsOpen(null)}
     >
       <HeaderBackground
         logo={siteLogo}
-        handleOpen={handleOpen}
+        setIsOpen={setIsOpen}
         isOpen={isOpen}
+        navigationLegend={navigationLegend}
+        navigationLabels={navigationLabels}
       />
       {menuLinks && <MobileNavigation menuLinks={menuLinks} />}
-      {menuLinks && (
+      {menuLinks && contentMenu && (
         <Navigation
           menuLinks={menuLinks}
-          handleClose={handleClose}
+          contentMenu={contentMenu}
+          setIsOpen={setIsOpen}
           isOpen={isOpen}
+          navigationLabels={navigationLabels}
+          allProducts={allProducts}
+          localePrefix={localePrefix}
+          menuShipping={menuShipping}
+          journalImage={journalImage}
+          shopImage={shopImage}
+          sanityDataset={sanityDataset}
+          sanityProjectID={sanityProjectID}
+          journalLinks={journalLinks}
+          latestArticles={latestArticles}
         />
       )}
       {/* Accounts, country selector + cart toggle */}

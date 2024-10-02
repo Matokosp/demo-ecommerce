@@ -11,7 +11,7 @@ type Props = PortableTextMarkComponentProps & {
 
 export default function LinkInternalAnnotation({ children, value }: Props) {
   if (!value?.slug) {
-    return null;
+    return <></>;
   }
 
   return (

@@ -1,21 +1,30 @@
 import clsx from "clsx";
 
-import SanityFooter from "~/components/global/SanityFooter";
-import LogoIcon from "~/components/icons/Logo";
 import { Link } from "~/components/Link";
-import PortableText from "~/components/portableText/PortableText";
-import type { SanityLink } from "~/lib/sanity";
+import type { SanityLink, SanityLinkInternal } from "~/lib/sanity";
 import { useRootLoaderData } from "~/root";
 
+import CustomInput from "../elements/CustomInput";
 import { Legend } from "../elements/Icons";
 import { Section } from "../layout/Section";
+import { CountrySelector } from "./CountrySelector";
 
 /**
  * A component that specifies the content of the footer on the website
  */
-export default function Footer() {
-  const { layout } = useRootLoaderData();
+export const Footer = ({
+  colorTheme,
+}: {
+  colorTheme?: { background: string; text: string };
+}) => {
+  const { layout, selectedLocale } = useRootLoaderData();
   const { footer } = layout || {};
+
+  const langPrefix =
+    "/" +
+    selectedLocale.language.toLowerCase() +
+    "-" +
+    selectedLocale.country.toLowerCase();
 
   const {
     subscribeText,
@@ -28,73 +37,47 @@ export default function Footer() {
     bottomLinks,
     legend,
     copyright,
+    languageBox,
   } = footer;
 
   const listLinks = (columnLinks: SanityLink[], title: string) => {
     return (
       <div>
-        <h4>{title}</h4>
-        {columnLinks.map((link) => {
-          return link._type === "linkExternal" ? (
-            <div className="mb-6" key={link._key}>
+        <h4 className="mb-5 uppercase">{title}</h4>
+        <div className="flex flex-col gap-y-[5px]">
+          {columnLinks.map((link) => {
+            return link._type === "linkExternal" ? (
               <a
-                className="linkTextNavigation"
+                key={link._key}
                 href={link.url}
                 rel="noreferrer"
                 target={link.newWindow ? "_blank" : "_self"}
               >
                 {link.title}
               </a>
-            </div>
-          ) : link._type === "linkInternal" ? (
-            <div className="mb-6" key={link._key}>
-              {/* <Link className="linkTextNavigation" to={link.slug}>
+            ) : link._type === "linkInternal" ? (
+              <Link key={link._key} to={link.slug ?? "#"}>
                 {link.title}
-              </Link> */}
-            </div>
-          ) : null;
-        })}
+              </Link>
+            ) : null;
+          })}
+        </div>
       </div>
     );
   };
 
-  // const renderLinks = footer?.linksOne?.map((link: SanityLink) => {
-  //   if (link._type === "linkExternal") {
-  //     return (
-  //       <div className="mb-6" key={link._key}>
-  //         <a
-  //           className="linkTextNavigation"
-  //           href={link.url}
-  //           rel="noreferrer"
-  //           target={link.newWindow ? "_blank" : "_self"}
-  //         >
-  //           {link.title}
-  //         </a>
-  //       </div>
-  //     );
-  //   }
-  //   if (link._type === "linkInternal") {
-  //     if (!link.slug) {
-  //       return null;
-  //     }
-
-  //     return (
-  //       <div className="mb-6" key={link._key}>
-  //         <Link className="linkTextNavigation" to={link.slug}>
-  //           {link.title}
-  //         </Link>
-  //       </div>
-  //     );
-  //   }
-  //   return null;
-  // });
-
   return (
     <footer
-      className="mt-20 border-[1px] border-[rgba(0,0,0,0.1)] pl-16 pt-20"
+      className={clsx(
+        "overflow-hidden border-[1px] border-[rgba(0,0,0,0.1)] pt-20"
+      )}
       role="contentinfo"
+      style={{
+        background: colorTheme && colorTheme.background,
+        color: colorTheme && colorTheme.text,
+      }}
     >
-      <Section>
+      <Section className="relative">
         <div className="col-span-6 flex gap-x-20">
           {listLinks(linksOne, columnOneTitle)}
           {listLinks(linksTwo, columnTwoTitle)}
@@ -103,19 +86,33 @@ export default function Footer() {
         <div className="col-span-6 flex justify-end">
           <div className="flex w-5/6 flex-col gap-y-6">
             <p>{subscribeText}</p>
-            <input type="text" />
+            <CustomInput
+              type="text"
+              placeholder="Email"
+              submitButton="Subscribe"
+            />
           </div>
         </div>
         <div className="col-span-12 mt-[200px] w-full">
-          <Legend />
-          {/* <h3 className="text-[calc(9.5vw+0.3rem)]">{legend}</h3> */}
+          <Legend color={colorTheme ? colorTheme.text : "black"} />
         </div>
-        <div className="col-span-12 mt-12">
-          {/* {bottomLinks.map((link) => {
-            return;
-          })} */}
+        <div className="col-span-12 mt-12 flex items-center justify-between">
+          <div className="flex items-center gap-x-10">
+            {bottomLinks.map((link: SanityLinkInternal) => {
+              return (
+                <Link key={link._key} to={langPrefix + link.slug ?? "#"}>
+                  {link.title}
+                </Link>
+              );
+            })}
+            <CountrySelector
+              languageBox={languageBox}
+              colorTheme={colorTheme}
+            />
+          </div>
+          <p>{copyright}</p>
         </div>
       </Section>
     </footer>
   );
-}
+};

@@ -71,12 +71,12 @@ export function defineSanityConfig(config: SanityConfig) {
       visionTool(),
       documentInternationalization({
         supportedLanguages: LANGUAGES,
-        schemaTypes: ['guide', 'page'],
+        schemaTypes: ['guide', 'page', 'article'],
       }),
       internationalizedArray({
         languages: LANGUAGES,
         defaultLanguages: ['en'],
-        fieldTypes: ['string', 'body', 'faqs', 'simpleBlockContent', 'hero.collection'],
+        fieldTypes: ['string', 'body', 'faqs', 'benefits', 'simpleBlockContent', 'hero.collection'],
         buttonLocations: ['unstable__fieldAction'],
       }),
       languageFilter({
@@ -122,6 +122,15 @@ export function defineSanityConfig(config: SanityConfig) {
             }),
           },
           {
+            id: 'article-language',
+            title: 'Article with Language',
+            schemaType: 'article',
+            parameters: [{name: 'language', type: 'string'}],
+            value: (params: {language: string}) => ({
+              language: params.language,
+            }),
+          },
+          {
             id: 'page-language',
             title: 'Page with Language',
             schemaType: 'page',
@@ -130,7 +139,9 @@ export function defineSanityConfig(config: SanityConfig) {
               language: params.language,
             }),
           },
-        ].filter((template) => !['guide', 'page', 'translation.metadata'].includes(template.id))
+        ].filter(
+          (template) => !['guide', 'page', 'article', 'translation.metadata'].includes(template.id)
+        )
       },
     },
 

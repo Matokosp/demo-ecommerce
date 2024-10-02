@@ -1,6 +1,3 @@
-import { Image } from "@shopify/hydrogen";
-
-import PortableText from "~/components/portableText/PortableText";
 import type { SanityModuleHomeArticles } from "~/lib/sanity";
 import { useRootLoaderData } from "~/root";
 
@@ -10,13 +7,15 @@ import LinkButton from "../elements/LinkButton";
 import { Label } from "../global/Label";
 import { Section } from "../layout/Section";
 import SanityImage from "../media/SanityImage";
+import { ArticleGallery } from "../sections/ArticleGallery";
 
 export const HomeArticles = ({
   module,
 }: {
   module: SanityModuleHomeArticles;
 }) => {
-  const { sanityDataset, sanityProjectID } = useRootLoaderData();
+  const { sanityDataset, sanityProjectID, selectedLocale } =
+    useRootLoaderData();
   const {
     articles,
     description,
@@ -27,8 +26,13 @@ export const HomeArticles = ({
     link,
   } = module;
 
+  const prefix =
+    selectedLocale.language.toLowerCase() +
+    "-" +
+    selectedLocale.country.toLowerCase();
+
   return (
-    <Section noPadding className="mt-[200px]">
+    <Section noPadding className="mb-[58px] mt-[200px]">
       <div className="col-span-12 mb-10 grid grid-cols-12 items-center px-[22px]">
         <div className="col-span-6">
           <h2 className="heading-1">{title}</h2>
@@ -48,9 +52,9 @@ export const HomeArticles = ({
                 className="block"
                 link={{
                   _key: featured._id,
-                  _type: "linkExternal",
-                  newWindow: true,
-                  url: featured.slug.current,
+                  _type: "linkInternal",
+                  documentType: "article",
+                  slug: "/article/" + featured.slug.current,
                   title: "readmore",
                 }}
               >
@@ -86,37 +90,9 @@ export const HomeArticles = ({
           );
         })}
       </div>
-      <div className="col-span-12 mt-10 grid grid-cols-12 gap-x-[10px] px-[22px]">
-        {articles.map((article, i) => {
-          return article.title !== featured.title ? (
-            <div key={article.title} className="col-span-3">
-              <Image src={article.image.url} />
-              <div className="mt-4">
-                {article.tags.map((category) => {
-                  return (
-                    <p
-                      className="caption mb-4 inline-block border-[1px] border-black px-[6px] py-[2px]"
-                      key={category.title}
-                    >
-                      {category.title}
-                    </p>
-                  );
-                })}
-                <p className="caption mb-6 text-darkGray">
-                  {article.author}
-                  {article.time && " • " + article.time}
-                </p>
-                <h3 className="mb-4">{article.title}</h3>
-                {article.description && (
-                  <PortableText blocks={article.description} />
-                )}
-              </div>
-            </div>
-          ) : null;
-        })}
-      </div>
+      <ArticleGallery articles={articles} filtered={featured.title} />
       {link && (
-        <div className="col-span-12 mt-20 px-6">
+        <div className="col-span-12 px-6">
           <LinkButton
             mode="centered"
             tone="default"

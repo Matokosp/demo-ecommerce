@@ -17,6 +17,7 @@ import { useEffect, useMemo, useRef } from "react";
 
 import { countries } from "~/data/countries";
 import type {
+  SanityArticlePage,
   SanityCollectionPage,
   SanityHomePage,
   SanityModule,
@@ -190,7 +191,8 @@ export async function fetchGids({
     | SanityPage
     | SanityCollectionPage
     | SanityProductPage
-    | SanityPersonPage;
+    | SanityPersonPage
+    | SanityArticlePage;
   context: AppLoadContext;
 }) {
   const productGids = extract(`..[_type == "productWithVariant"].gid`, page);
@@ -350,4 +352,16 @@ export const toRoman = (num: number) => {
   }
 
   return roman;
+};
+
+// Language prefix
+
+export const langPrefix = ({
+  country,
+  lang,
+}: {
+  country: string;
+  lang: string;
+}) => {
+  return country.toLowerCase() + "-" + lang.toLowerCase();
 };

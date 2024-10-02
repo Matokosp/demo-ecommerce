@@ -18,14 +18,17 @@ import { usePageAnalytics } from "~/hooks/usePageAnalytics";
 type FormMode = "default" | "inline";
 
 export default function AddToCartButton({
-  children = <Label _key="cart.addToCart" />,
+  finalAmount,
   lines,
   analytics,
   mode = "default",
   buttonClassName,
   ...props
 }: {
-  children?: React.ReactNode;
+  finalAmount?: {
+    amount: string;
+    currency: string;
+  };
   lines: CartLineInput[];
   analytics?: unknown;
   mode?: FormMode;
@@ -50,18 +53,21 @@ export default function AddToCartButton({
               value={JSON.stringify(analytics)}
             />
             <button
-              className={
-                mode == "default"
-                  ? twMerge(defaultButtonStyles(), buttonClassName)
-                  : buttonClassName
-              }
+              className={mode == "default" ? buttonClassName : buttonClassName}
               {...props}
               disabled={fetcher.state !== "idle" || props.disabled}
             >
               {fetcher.state !== "idle" ? (
                 <SpinnerIcon width={24} height={24} />
               ) : (
-                children
+                <div className="flex justify-between">
+                  <Label _key="cart.oneTimePurchase" />
+                  {finalAmount && (
+                    <span>
+                      {finalAmount.amount} {finalAmount.currency}
+                    </span>
+                  )}
+                </div>
               )}
             </button>
           </AddToCartAnalytics>

@@ -31,7 +31,8 @@ export default defineField({
     // Name
     defineField({
       name: 'title',
-      type: 'internationalizedArrayString',
+      type: 'text',
+      rows: 2,
       group: 'editorial',
     }),
     // Slug
@@ -42,39 +43,59 @@ export default defineField({
       validation: validateSlug,
       group: 'editorial',
     }),
-    // Description
+    // Image
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'internationalizedArraySimpleBlockContent',
+      name: 'image',
+      type: 'image',
+      title: 'Hero Image',
+      group: 'editorial',
+    }),
+    // Preamble
+    defineField({
+      name: 'preamble',
+      title: 'Preamble',
+      type: 'text',
+      rows: 2,
       group: 'editorial',
     }),
     // Author
     defineField({
       name: 'author',
       title: 'Author',
-      type: 'internationalizedArrayString',
+      type: 'text',
+      rows: 2,
       group: 'editorial',
     }),
     // Estimated time
     defineField({
       name: 'time',
       title: 'Estimated time',
-      type: 'internationalizedArrayString',
+      type: 'text',
+      rows: 2,
       group: 'editorial',
     }),
-    // Image
+    // Description
     defineField({
-      name: 'image',
-      type: 'image',
+      name: 'description',
+      title: 'Description',
+      type: 'simpleBlockContent',
+      group: 'editorial',
+    }),
+    // Content heading
+    defineField({
+      name: 'contentHeading',
+      title: 'Content Heading',
+      type: 'simpleBlockContent',
       group: 'editorial',
     }),
     // Content
     defineField({
-      name: 'content',
       title: 'Content',
-      type: 'internationalizedArraySimpleBlockContent',
+      name: 'content',
+      type: 'array',
+      of: [{type: 'module.articleBody'}],
       group: 'editorial',
+      // validation: (Rule) => Rule.required().min(1),
     }),
     // SEO
     defineField({
@@ -82,6 +103,12 @@ export default defineField({
       title: 'SEO',
       type: 'seo.page',
       group: 'seo',
+    }),
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      hidden: false,
     }),
   ],
   preview: {
@@ -96,7 +123,7 @@ export default defineField({
 
       return {
         media: seoImage,
-        title: title[0].value,
+        title: title,
         subtitle: language?.toUpperCase(),
       }
     },

@@ -17,6 +17,32 @@ export const PRODUCT_VARIANT_FIELDS = `
       currencyCode
       amount
     }
+    sellingPlanAllocations(first: 10) {
+      edges {
+        node {
+          sellingPlan {
+            id
+            name
+            description
+            recurringDeliveries
+            options {
+              name
+              value
+            }
+          }
+          priceAdjustments {
+            price {
+              currencyCode
+              amount
+            }
+            unitPrice {
+              currencyCode
+              amount
+            }
+          }
+        }
+      }
+    }
     selectedOptions {
       name
       value
@@ -44,6 +70,15 @@ export const PRODUCT_FIELDS = `
     }
     title
     vendor
+
+    collections(first: 10) {
+     nodes {
+        id
+        title
+        handle
+      }
+    }
+
   }
 `;
 

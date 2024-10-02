@@ -1,6 +1,5 @@
 import { usePreviewContext } from "hydrogen-sanity";
 
-import Footer from "~/components/global/Footer";
 import Header from "~/components/global/Header";
 import { PreviewBanner } from "~/components/preview/PreviewBanner";
 
@@ -32,11 +31,11 @@ export function Layout({ backgroundColor, children }: LayoutProps) {
         <Header />
 
         <main className="relative grow pl-16" id="mainContent" role="main">
-          <div className="mx-auto pb-overlap">{children}</div>
+          <div className="mx-auto">{children}</div>
         </main>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
 
       {isPreview ? <PreviewBanner /> : <></>}
     </>

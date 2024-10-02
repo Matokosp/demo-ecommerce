@@ -1,4 +1,5 @@
 // Rich text annotations used in the block content editor
+import editorialReference from './annotations/editorialReference'
 import annotationLinkEmail from './annotations/linkEmail'
 import annotationLinkExternal from './annotations/linkExternal'
 import annotationLinkInternal from './annotations/linkInternal'
@@ -9,6 +10,7 @@ const annotations = [
   annotationLinkExternal,
   annotationLinkInternal,
   annotationProduct,
+  editorialReference,
 ]
 
 // Document types
@@ -44,12 +46,14 @@ import sharedText from './singletons/sharedText'
 const singletons = [home, settings, sharedText]
 
 // Block content
+import articleBody from './blocks/articleBody'
 import body from './blocks/body'
 import simpleBlockContent from './blocks/simpleBlockContent'
 
 const blocks = [body, simpleBlockContent]
 
 // Object types
+import benefits from './objects/benefits'
 import creator from './objects/creator'
 import customProductOptionColor from './objects/customProductOption/color'
 import customProductOptionSize from './objects/customProductOption/size'
@@ -62,10 +66,13 @@ import label from './objects/label'
 import linkExternal from './objects/linkExternal'
 import linkInternal from './objects/linkInternal'
 import moduleAccordion from './objects/module/accordion'
+import moduleArticleArchive from './objects/module/articleArchive'
 import moduleCallout from './objects/module/callout'
 import moduleCallToAction from './objects/module/callToAction'
 import moduleCollection from './objects/module/collection'
 import moduleCollectionsSwiper from './objects/module/collectionsSwiper'
+import moduleFeaturedArticle from './objects/module/featuredArticle'
+import moduleFloatingTexts from './objects/module/floatingTexts'
 import moduleGrid from './objects/module/grid'
 import homeArticles from './objects/module/homeArticles'
 import moduleImage from './objects/module/image'
@@ -74,6 +81,7 @@ import moduleInstagram from './objects/module/instagram'
 import moduleProduct from './objects/module/product'
 import moduleProductHighlight from './objects/module/productHighlight'
 import moduleProducts from './objects/module/products'
+import moduleProductShowcase from './objects/module/productShowcase'
 import moduleTaggedProducts from './objects/module/taggedProducts'
 import placeholderString from './objects/placeholderString'
 import productHotspots from './objects/productHotspots'
@@ -89,6 +97,7 @@ import shopifyProduct from './objects/shopifyProduct'
 import shopifyProductVariant from './objects/shopifyProductVariant'
 
 const objects = [
+  benefits,
   creator,
   customProductOptionColor,
   customProductOptionSize,
@@ -103,6 +112,7 @@ const objects = [
   moduleAccordion,
   moduleCallout,
   moduleCallToAction,
+  moduleFloatingTexts,
   moduleCollection,
   moduleCollectionsSwiper,
   moduleGrid,
@@ -126,6 +136,10 @@ const objects = [
   shopifyProduct,
   shopifyProductVariant,
   moduleProductHighlight,
+  moduleFeaturedArticle,
+  moduleArticleArchive,
+  articleBody,
+  moduleProductShowcase,
 ]
 
 export const types = [...annotations, ...documents, ...singletons, ...objects, ...blocks]

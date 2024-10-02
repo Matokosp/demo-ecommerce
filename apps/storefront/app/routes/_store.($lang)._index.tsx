@@ -5,19 +5,20 @@ import {
   type LoaderFunctionArgs,
   type SerializeFrom,
 } from "@shopify/remix-oxygen";
-import clsx from "clsx";
 import { SanityPreview } from "hydrogen-sanity";
 import { Suspense } from "react";
 
+import { Footer } from "~/components/global/Footer";
 import HomeHero from "~/components/heroes/Home";
 import ModuleGrid from "~/components/modules/ModuleGrid";
 import { baseLanguage } from "~/data/countries";
 import type { SanityHeroHome, SanityHomePage } from "~/lib/sanity";
+import { ColorTheme } from "~/lib/theme";
 import { fetchGids, notFound, validateLocale } from "~/lib/utils";
 import { HOME_PAGE_QUERY } from "~/queries/sanity/home";
 
 const seo: SeoHandleFunction<typeof loader> = ({ data }) => ({
-  title: data?.page?.seo?.title || "Sanity x Hydrogen",
+  title: data?.page?.seo?.title || "Ode to Strength",
   description:
     data?.page?.seo?.description ||
     "A custom storefront powered by Hydrogen and Sanity",
@@ -78,11 +79,8 @@ export default function Index() {
             {/* Page hero */}
             {page?.hero && <HomeHero hero={page.hero as SanityHeroHome} />}
 
-            {page?.modules && (
-              // <div className={clsx("", "md:px-8")}>
-              <ModuleGrid items={page.modules} />
-              // </div>
-            )}
+            {page?.modules && <ModuleGrid items={page.modules} />}
+            <Footer />
           </Await>
         </Suspense>
       )}

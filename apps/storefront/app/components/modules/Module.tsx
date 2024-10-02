@@ -6,16 +6,25 @@ import InstagramModule from "~/components/modules/Instagram";
 import ProductModule from "~/components/modules/Product";
 import type { SanityModule } from "~/lib/sanity";
 
+import { ArticleArchive } from "./ArticleArchive";
 import CollectionsSwiper from "./CollectionsSwiper";
+import { FeaturedArticle } from "./FeaturedArticle";
+import { FloatingTexts } from "./FloatingTexts";
 import { HomeArticles } from "./HomeArticles";
 import ProductHighlight from "./ProductHighlight";
+import { ProductShowcase } from "./ProductShowcase";
 
 type Props = {
   imageAspectClassName?: string;
   module: SanityModule;
+  colorTheme?: { background: string; text: string };
 };
 
-export default function Module({ imageAspectClassName, module }: Props) {
+export default function Module({
+  imageAspectClassName,
+  module,
+  colorTheme,
+}: Props) {
   switch (module._type) {
     case "module.callout":
       return <CalloutModule module={module} />;
@@ -33,6 +42,14 @@ export default function Module({ imageAspectClassName, module }: Props) {
       return <InstagramModule module={module} />;
     case "module.productHighlight":
       return <ProductHighlight module={module} />;
+    case "module.featuredArticle":
+      return <FeaturedArticle module={module} />;
+    case "module.articleArchive":
+      return <ArticleArchive module={module} />;
+    case "module.productShowcase":
+      return <ProductShowcase module={module} />;
+    case "module.floatingTexts":
+      return <FloatingTexts module={module} colorTheme={colorTheme} />;
     case "module.product":
       return (
         <ProductModule

@@ -18,6 +18,10 @@ export default defineType({
       title: 'Navigation',
     },
     {
+      name: 'footer',
+      title: 'Footer',
+    },
+    {
       name: 'productOptions',
       title: 'Product options',
     },
@@ -31,6 +35,36 @@ export default defineType({
     },
   ],
   fields: [
+    // Navigation Labels
+    defineField({
+      name: 'navigationLabels',
+      title: 'Navigation Labels',
+      type: 'array',
+      group: 'navigation',
+      of: [
+        {
+          name: 'label',
+          title: 'Label',
+          type: 'text',
+          rows: 1,
+        },
+      ],
+    }),
+    // Navigation legend
+    defineField({
+      name: 'navigationLegend',
+      title: 'Navigation Legend',
+      type: 'text',
+      rows: 2,
+      group: 'navigation',
+    }),
+    // Shop Image
+    defineField({
+      name: 'shopImage',
+      title: 'Shop Image',
+      group: 'navigation',
+      type: 'image',
+    }),
     // Menu
     defineField({
       name: 'menu',
@@ -101,6 +135,65 @@ export default defineType({
             {type: 'linkExternal'},
           ],
         }),
+        defineField({
+          name: 'allProducts',
+          type: 'linkInternal',
+          title: 'All products link',
+        }),
+      ],
+    }),
+    // Journal Image
+    defineField({
+      name: 'journalImage',
+      title: 'Journal Image',
+      group: 'navigation',
+      type: 'image',
+    }),
+    // Journal link
+    defineField({
+      name: 'journalLinks',
+      title: 'Journal Links',
+      type: 'object',
+      group: 'navigation',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'text',
+          rows: 2,
+        }),
+        defineField({
+          name: 'link',
+          title: 'Link',
+          type: 'linkInternal',
+        }),
+      ],
+    }),
+    // Navigation content links
+    defineField({
+      name: 'contentMenu',
+      title: 'Content Menu',
+      type: 'object',
+      group: 'navigation',
+      options: {
+        collapsed: false,
+        collapsible: true,
+      },
+      fields: [
+        // Title
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'text',
+          rows: 2,
+        }),
+        // Links
+        defineField({
+          name: 'contentLinks',
+          title: 'Content Links',
+          type: 'array',
+          of: [{type: 'linkInternal'}, {type: 'linkExternal'}],
+        }),
       ],
     }),
     // Site logo
@@ -114,7 +207,7 @@ export default defineType({
       name: 'footer',
       title: 'Footer',
       type: 'object',
-      group: 'navigation',
+      group: 'footer',
       options: {
         collapsed: false,
         collapsible: true,
@@ -186,7 +279,21 @@ export default defineType({
           title: 'Copyright',
           type: 'internationalizedArrayString',
         }),
+        // Language box text
+        defineField({
+          name: 'languageBox',
+          title: 'Language Box Text',
+          type: 'text',
+        }),
       ],
+    }),
+    // Shipping info
+    defineField({
+      name: 'menuShipping',
+      title: 'Menu shipping information',
+      type: 'text',
+      rows: 2,
+      group: 'navigation',
     }),
     // Custom product options
     defineField({

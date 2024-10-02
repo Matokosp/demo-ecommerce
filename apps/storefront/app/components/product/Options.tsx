@@ -26,7 +26,7 @@ export default function ProductOptions({
   customProductOptions?: SanityCustomProductOption[];
 }) {
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 gap-y-8">
       {/* Each option will show a label and option value <Links> */}
       <VariantSelector
         handle={product.handle}
@@ -42,10 +42,8 @@ export default function ProductOptions({
 
           return (
             <div>
-              <legend className="mb-2 text-xs text-darkGray">
-                {option.name}
-              </legend>
-              <div className="flex flex-wrap items-center gap-1">
+              <legend className="caption mb-2">{option.name}</legend>
+              <div className="flex flex-wrap items-center gap-3">
                 {option.values.map(({ value, to, isActive, isAvailable }) => {
                   const id = `option-${option.name}-${value}`;
 
@@ -151,7 +149,7 @@ const OptionButton = forwardRef<
       replace
       prefetch="intent"
       className={clsx([
-        "cursor-pointer rounded-[6px] border px-3 py-2 text-sm leading-none",
+        "caption min-w-[108px] cursor-pointer rounded-[30px] border px-3 py-2 text-center leading-none",
         isSelected
           ? "border-black text-black"
           : "border-lightGray text-darkGray",

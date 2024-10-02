@@ -34,6 +34,11 @@ export default {
             name: 'annotationLinkExternal',
             type: 'annotationLinkExternal',
           },
+          // Reference
+          {
+            name: 'annotationReference',
+            type: 'editorialReference',
+          },
         ],
       },
     },

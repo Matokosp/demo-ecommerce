@@ -25,6 +25,25 @@ export type SanityLayout = {
   footer?: any;
   notFoundPage?: SanityNotFoundPage;
   labels?: SanityLabel[];
+  navigationLegend: string;
+  navigationLabels: string[];
+  contentMenu?: { contentLinks: SanityMenuLink[]; title: string };
+  allProducts: SanityLinkInternal;
+  menuShipping: string;
+  shopImage: SanityAssetImage;
+  journalImage: SanityAssetImage;
+  journalLinks: {
+    title: string;
+    link: SanityLinkInternal;
+  };
+  latestArticles: {
+    tags: {
+      title: string;
+      _id: string;
+    }[];
+    title: string;
+    _id: string;
+  }[];
 };
 
 export type SanityCollection = {
@@ -169,7 +188,54 @@ export type SanityModule =
   | SanityModuleInstagram
   | SanityModuleProduct
   | SanityModuleProductHighlight
-  | SanityModuleCollectionsSwiper;
+  | SanityModuleCollectionsSwiper
+  | SanityModuleFeaturedArticle
+  | SanityModuleArticleArchive
+  | SanityModuleProductShowcase
+  | SanityModuleFloatingTexts;
+
+export type SanityModuleProductShowcase = {
+  layout: "defult" | "big";
+  direction: "rtl" | "ltr";
+  title: string;
+  image?: Image;
+  modules: SanityModuleProduct[];
+};
+
+export type SanityModuleFloatingTexts = {
+  layout: "default" | "columns";
+  featuredImage?: SanityAssetImage;
+  referenceImage?: SanityAssetImage;
+  reference?: PortableTextBlock[];
+  copy: {
+    simplecontent: PortableTextBlock[];
+  }[];
+  legend?: string;
+};
+
+export type SanityModuleArticleArchive = {
+  layout: string;
+  articles: {
+    _id: string;
+    title: string;
+    description: PortableTextBlock[];
+    slug: {
+      current: string;
+    };
+    tags: {
+      _id: string;
+      title: string;
+    }[];
+    time: string;
+    author: string;
+    image: SanityAssetImage;
+    preamble: string;
+  }[];
+  tags: {
+    title: string;
+    _id: string;
+  }[];
+};
 
 export type SanityModuleAccordion = {
   _key?: string;
@@ -220,6 +286,26 @@ export type SanityModuleCollectionsSwiper = {
   thirdCollectionItems: {
     productWithVariant: SanityProductWithVariant;
   }[];
+};
+
+export type SanityModuleFeaturedArticle = {
+  title: string;
+  featured: {
+    _id: string;
+    title: string;
+    preamble: PortableTextBlock[];
+    slug: {
+      current: string;
+    };
+    tags: {
+      _id: string;
+      title: string;
+    }[];
+    time: string;
+    author: string;
+    description: PortableTextBlock[];
+  };
+  featuredImage: Image;
 };
 
 export type SanityModuleStackHighlight = {
@@ -321,11 +407,14 @@ export type SanityNotFoundPage = {
 };
 
 export type SanityPage = {
+  bodyTitle: string;
   body: PortableTextBlock[];
   colorTheme?: SanityColorTheme;
   hero?: SanityHeroPage;
   seo: SanitySeo;
   title: string;
+  showHero: boolean;
+  modules: (SanityModuleImage | SanityModuleInstagram)[];
 };
 
 export type SanityProductHotspot = {
@@ -370,6 +459,25 @@ export type SanityProductPage = {
     deliverySummary: string;
     environmentallyFriendly: string;
   };
+  benefits: {
+    title: string;
+    body: PortableTextBlock[];
+  }[];
+  articles: {
+    _id: string;
+    title: string;
+    image: SanityAssetImage;
+    tags: {
+      _id: string;
+      title: string;
+    }[];
+    author: string;
+    time: string;
+    description: PortableTextBlock[];
+    preamble: any;
+  }[];
+  relatedArticlesText: PortableTextBlock[];
+  relatedProducts: SanityModuleProduct[];
 };
 
 export type SanitySeo = {
@@ -389,6 +497,31 @@ export type SanityPerson = {
 export type SanityPersonPage = SanityPerson & {
   seo: SanitySeo;
   products: SanityModuleProduct[];
+};
+
+export type SanityArticle = {
+  title: string;
+  tags: {
+    _id: string;
+    title: string;
+  }[];
+  description: PortableTextBlock[];
+  author: string;
+  time: string;
+  image: SanityAssetImage;
+  latestArticles: any;
+  contentHeading: PortableTextBlock[] | null;
+  content: {
+    _key: string;
+    textContent: PortableTextBlock[] | null;
+    image: SanityAssetImage;
+  }[];
+};
+
+export type SanityArticlePage = SanityArticle & {
+  colorTheme?: SanityColorTheme;
+  seo: SanitySeo;
+  // products: SanityModuleProduct[];
 };
 
 export type SanityCreator = {
@@ -438,6 +571,7 @@ export type SanityModuleHomeArticles = {
     author: string;
     time: string;
     description: PortableTextBlock[];
+    preamble: any;
   }[];
   firstImage: Image;
   secondImage: Image;
@@ -448,6 +582,7 @@ export type SanityModuleProductHighlight = {
   _id: string;
   _key?: string;
   _type: "module.productHighlight";
+  sectionTitle?: string;
   title: string;
   backgroundImage: Image;
   body: string;

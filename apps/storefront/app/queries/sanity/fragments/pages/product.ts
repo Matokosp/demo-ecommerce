@@ -3,9 +3,12 @@ import groq from "groq";
 import { COLOR_THEME } from "../colorTheme";
 import { CREATOR } from "../creator";
 import { CUSTOM_PRODUCT_OPTIONS } from "../customProductOptions";
+import { IMAGE } from "../image";
 import { MATERIAL } from "../material";
 import { MATERIAL_UPSELLS } from "../materialUpsells";
+import { MODULE_PRODUCT } from "../modules/product";
 import { PORTABLE_TEXT } from "../portableText/portableText";
+import { PRODUCT_BENEFITS } from "../productBenefits";
 import { PRODUCT_FAQS } from "../productFaqs";
 import { PRODUCT_GUIDE } from "../productGuide";
 import { SEO_SHOPIFY } from "../seoShopify";
@@ -25,6 +28,27 @@ export const PRODUCT_PAGE = groq`
   },
   composition[]{
     ${MATERIAL}
+  },
+  ${PRODUCT_BENEFITS},
+  "relatedArticlesText": coalesce(relatedArticlesText[_key == $language][0].value),
+  "articles": *[_type == 'article' && _id in ^.relatedArticles[]._ref && language == $language] | order(_updatedAt desc) {
+    _id,
+    title,
+    image {
+      ${IMAGE}
+    },
+    tags[]->{
+      _id,
+      "title": coalesce(title[_key == $language][0].value),
+    },
+    preamble,
+    author,
+    slug,
+    time,
+  },
+  relatedProducts[] {
+    _key,
+    ${MODULE_PRODUCT}
   },
   ${PRODUCT_FAQS},
   "guide": ${PRODUCT_GUIDE},

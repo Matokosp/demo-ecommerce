@@ -1,46 +1,63 @@
 import { Image } from "@shopify/hydrogen";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
 
 import { Link } from "~/components/Link";
 
 export default function HeaderBackground({
   logo,
-  handleOpen,
   isOpen,
+  navigationLegend,
+  navigationLabels,
+  setIsOpen,
 }: {
   logo?: { url: string };
-  handleOpen: () => void;
-  isOpen: boolean;
+  isOpen: number | null;
+  setIsOpen: React.Dispatch<React.SetStateAction<number | null>>;
+  navigationLegend: string;
+  navigationLabels: string[];
 }) {
-  const [scrolledDown, setScrolledDown] = useState(false);
-
-  const handleScroll = () => {
-    setScrolledDown(window.scrollY > 100);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    // Trigger handler on mount to account for reloads
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
   return (
     <div
-      className="absolute inset-0 cursor-pointer bg-limestone"
-      onMouseEnter={() => handleOpen()}
+      className="absolute inset-0 flex cursor-pointer flex-col justify-between bg-limestone"
+      onMouseEnter={() => setIsOpen(0)}
+      onClick={() => setIsOpen(null)}
     >
       <div
         className={clsx(
           "absolute bottom-0 left-1/2 top-0 flex w-full -translate-x-1/2 items-center justify-center",
           "lg:w-full",
-          isOpen ? "border-1 border-r border-solid border-lightGray" : ""
+          isOpen !== null
+            ? "border-1 border-r border-solid border-lightGray"
+            : ""
         )}
       >
         <Link to="/" className={"w-[36px]"}>
           <Image src={logo ? logo.url : "#"} />
         </Link>
       </div>
+      <div className="absolute left-8 top-10 flex origin-right translate-x-[-100%] translate-y-[-50%] -rotate-90 gap-x-10">
+        {navigationLabels.map((label, idx: number) => {
+          return (
+            <button
+              className={clsx(
+                "text-body w-[max-content] duration-300",
+                isOpen === idx && "opacity-30"
+              )}
+              onMouseEnter={() => setIsOpen(navigationLabels.length - 1 - idx)}
+              key={label}
+            >
+              {label}
+            </button>
+          );
+        })}
+      </div>
+      <p
+        className={clsx(
+          "absolute bottom-10 left-10 w-[155px] origin-bottom-left -rotate-90"
+        )}
+      >
+        {navigationLegend}
+      </p>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Tooltip({ label, tone = "light" }: Props) {
   return (
     <div
       className={clsx(
-        "relative flex place-content-center rounded-sm px-2 py-1.5 text-xs leading-none",
+        "relative flex place-content-center px-2 py-1.5 text-xs leading-none",
         tone === "light"
           ? "bg-lightGray text-darkGray"
           : "bg-offBlack text-white"

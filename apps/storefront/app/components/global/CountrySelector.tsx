@@ -1,22 +1,24 @@
-import { Listbox } from "@headlessui/react";
 import { useFetcher, useLocation } from "@remix-run/react";
 import { CartForm } from "@shopify/hydrogen";
 import clsx from "clsx";
 import { useState } from "react";
 import invariant from "tiny-invariant";
 
-import { ChevronDownIcon } from "~/components/icons/ChevronDown";
-import RadioIcon from "~/components/icons/Radio";
+import allCountries from "~/data/allCountries.json";
 import { countries } from "~/data/countries";
 import { DEFAULT_LOCALE } from "~/lib/utils";
 import { useRootLoaderData } from "~/root";
 import type { Locale } from "~/types/shopify";
 
+import { Chevron } from "../elements/Icons";
+
 type Props = {
   align?: "center" | "left" | "right";
+  languageBox: string;
+  colorTheme?: { background: string; text: string };
 };
 
-export function CountrySelector({ align = "center" }: Props) {
+export function CountrySelector({ languageBox, colorTheme }: Props) {
   const fetcher = useFetcher();
 
   const [listboxOpen, setListboxOpen] = useState(false);
@@ -66,78 +68,81 @@ export function CountrySelector({ align = "center" }: Props) {
 
   return (
     <>
-      <Listbox onChange={setLocale} value={selectedLocale}>
-        {({ open }: { open: boolean }) => {
-          setTimeout(() => setListboxOpen(open));
-          return (
-            <div className="relative inline-flex">
-              <Listbox.Button
-                className={clsx(
-                  "flex h-[2.4rem] items-center rounded-sm bg-darkGray bg-opacity-0 px-3 py-2 text-sm font-bold duration-150",
-                  "hover:bg-opacity-10"
-                )}
-              >
-                <span className="mr-2">
-                  {fetcherLocaleLabel || selectedLocale.label}
-                </span>
-                <ChevronDownIcon className={clsx(open && "rotate-180")} />
-              </Listbox.Button>
-
-              <Listbox.Options
-                className={clsx(
-                  "absolute top-full z-10 mt-3 min-w-[150px] overflow-hidden rounded shadow",
-                  align === "center" && "left-1/2 -translate-x-1/2",
-                  align === "left" && "left-0",
-                  align === "right" && "right-0"
-                )}
-              >
-                <div className="max-h-64 overflow-y-auto bg-white">
-                  {listboxOpen && (
-                    <Countries
-                      selectedLocalePrefix={selectedLocalePrefix}
-                      getClassName={(active: boolean) => {
-                        return clsx([
-                          "p-3 flex justify-between items-center text-left font-bold text-sm cursor-pointer whitespace-nowrap",
-                          active ? "bg-darkGray bg-opacity-5" : null,
-                        ]);
-                      }}
-                    />
-                  )}
-                </div>
-              </Listbox.Options>
-            </div>
-          );
+      <button
+        className="relative z-[10] flex items-center gap-x-[10px]"
+        onClick={() => setListboxOpen(!listboxOpen)}
+      >
+        <p className={clsx(listboxOpen && "text-black")}>
+          {fetcherLocaleLabel || selectedLocale.label}
+        </p>
+        <span className={clsx(listboxOpen && "rotate-180", "duration-300")}>
+          <Chevron fill={!listboxOpen ? colorTheme?.text : "black"} />
+        </span>
+      </button>
+      <div
+        className={clsx(
+          `absolute bottom-0 left-0 z-[5] h-[200px] w-full translate-y-[100%] bg-[rgba(251,251,246,0.98)] p-[22px] duration-300`,
+          listboxOpen && "!translate-y-0"
+        )}
+        style={{
+          color: "black",
         }}
-      </Listbox>
+      >
+        <div className="grid grid-cols-12">
+          <p className="col-span-3">{languageBox}</p>
+          <div className="col-span-1"></div>
+          <Countries setLocale={setLocale} selectedLocale={selectedLocale} />
+        </div>
+      </div>
     </>
   );
 }
 
 export function Countries({
-  getClassName,
-  selectedLocalePrefix,
+  setLocale,
+  selectedLocale,
 }: {
-  getClassName: (active: boolean) => string;
-  selectedLocalePrefix: string;
+  setLocale: (newLocale: Locale) => void;
+  selectedLocale: Locale;
 }) {
+  let availableCountries: { name: string; description: string }[] = [];
+
+  Object.keys(countries).map((countryKey) => {
+    const countryLocale = countries[countryKey];
+    const arr: { name: string; description: string }[] = [];
+    const countryName: { name: string; description: string }[] =
+      allCountries.filter((ele) => ele.name === countryLocale.country);
+    !arr.includes(countryName[0]) ? arr.push(countryName[0]) : null;
+
+    availableCountries = arr;
+  });
+
   return (
     <>
-      {Object.keys(countries).map((countryKey) => {
-        const countryLocale = countries[countryKey];
-        const countryLocalePrefix = `${countryLocale?.language}-${countryLocale?.country}`;
-        const isSelected = countryLocalePrefix === selectedLocalePrefix;
-
-        return (
-          <Listbox.Option key={countryLocalePrefix} value={countryLocale}>
-            {({ active }: { active: boolean }) => (
-              <div className={getClassName(active)}>
-                <span className="mr-8">{countryLocale.label}</span>
-                <RadioIcon checked={isSelected} hovered={active} />
-              </div>
-            )}
-          </Listbox.Option>
-        );
-      })}
+      <div className="col-span-1 flex flex-col items-start justify-start gap-y-2">
+        {Object.keys(countries).map((countryKey) => {
+          return (
+            <button
+              className={clsx(
+                "text-body",
+                selectedLocale.label !== countries[countryKey].label &&
+                  "opacity-30"
+              )}
+              onClick={() => setLocale(countries[countryKey])}
+              key={countries[countryKey].label}
+            >
+              {countries[countryKey].label}
+            </button>
+          );
+        })}
+      </div>
+      <div className="col-span-1 flex flex-col items-start justify-start gap-y-2">
+        {availableCountries.map((country, i) => (
+          <button className={clsx(`text-body`)} key={country.name}>
+            {country.description}
+          </button>
+        ))}
+      </div>
     </>
   );
 }

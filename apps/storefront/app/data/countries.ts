@@ -4,13 +4,13 @@ export const countries: Localizations = {
   default: {
     language: "EN",
     country: "SE",
-    label: "English (SEK kr)",
+    label: "English",
     currency: "SEK",
   },
   "/sv-se": {
     language: "SV",
     country: "SE",
-    label: "Sweden (SEK kr)",
+    label: "Swedish",
     currency: "SEK",
   },
 };

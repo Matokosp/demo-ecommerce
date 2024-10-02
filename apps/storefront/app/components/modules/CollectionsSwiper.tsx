@@ -5,7 +5,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { SanityModuleCollectionsSwiper } from "~/lib/sanity";
 import { toRoman } from "~/lib/utils";
+import { useRootLoaderData } from "~/root";
 
+import { Link } from "../../components/Link";
 import { Asterisk } from "../elements/Icons";
 import { Section } from "../layout/Section";
 
@@ -16,6 +18,7 @@ type Props = {
 const aspectRatios = ["344/519", "344/609", "344/444", "344/519"];
 
 export default function CollectionModule({ module }: Props) {
+  const { selectedLocale } = useRootLoaderData();
   const {
     firstCollection,
     firstCollectionItems,
@@ -99,41 +102,49 @@ export default function CollectionModule({ module }: Props) {
           <AnimatePresence>
             {items[activeItems].map((product, i) => {
               return (
-                <motion.div
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1, transition: { delay: 0.4 } }}
+                <Link
+                  to={"/products/" + product.productWithVariant.slug}
+                  className="col-span-3 block h-full w-full"
                   // eslint-disable-next-line react/no-array-index-key
                   key={product.productWithVariant._id + i}
-                  className="col-span-3"
                 >
-                  <div
-                    className="flex items-center justify-center px-21"
-                    style={{
-                      aspectRatio: aspectRatios[i],
-                      background:
-                        i % 2 === 0
-                          ? "linear-gradient(180deg, #000 53.36%, rgba(79, 92, 96, 0.50) 83.01%, rgba(215, 229, 228, 0.50) 100%)"
-                          : "black",
+                  <motion.div
+                    exit={{ opacity: 0, scale: 0.98 }}
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      transition: { delay: 0.4 },
                     }}
                   >
-                    <Image
-                      src={product.productWithVariant.image}
-                      sizes="100%"
-                      className="h-auto w-full"
-                    />
-                  </div>
-                  <div className="mt-4 flex justify-between">
-                    <div>
-                      <p>{product.productWithVariant.title}</p>
+                    <div
+                      className="flex items-center justify-center px-21"
+                      style={{
+                        aspectRatio: aspectRatios[i],
+                        background:
+                          i % 2 === 0
+                            ? "linear-gradient(180deg, #000 53.36%, rgba(79, 92, 96, 0.50) 83.01%, rgba(215, 229, 228, 0.50) 100%)"
+                            : "black",
+                      }}
+                    >
+                      <Image
+                        src={product.productWithVariant.image}
+                        sizes="100%"
+                        className="h-auto w-full"
+                      />
                     </div>
-                    <div>
-                      <p className="uppercase">
-                        from {product.productWithVariant.price.minVariantPrice}
-                      </p>
+                    <div className="mt-4 flex justify-between">
+                      <div>
+                        <p>{product.productWithVariant.title}</p>
+                        <p className="mt-2">
+                          from{" "}
+                          {product.productWithVariant.price.minVariantPrice}{" "}
+                          {selectedLocale.currency}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </Link>
               );
             })}
           </AnimatePresence>

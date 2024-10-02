@@ -40,6 +40,12 @@ export default defineField({
     }),
     // Title
     defineField({
+      name: 'sectionTitle',
+      title: 'Section Title',
+      type: 'string',
+    }),
+    // Title
+    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',

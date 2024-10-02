@@ -116,6 +116,7 @@ module.exports = {
         red: "#EC5039",
         shopPay: "#5A31F4",
         limestone: "#FBFBF6",
+        secondary: "#EEE8D8",
       },
       height: {
         "header-sm": "4.375rem",

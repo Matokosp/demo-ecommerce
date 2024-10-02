@@ -39,14 +39,14 @@ export default function HeaderActions() {
         )}
       >
         {/* Country select */}
-        <div
+        {/* <div
           className={clsx(
             "hidden", //
             "lg:block"
           )}
         >
           <CountrySelector />
-        </div>
+        </div> */}
         {/* Account */}
         <Link
           className={clsx([

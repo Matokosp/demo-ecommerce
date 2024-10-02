@@ -17,7 +17,8 @@
 
 @layer components {
   .linkTextNavigation {
-    @apply decoration-[0.1em] underline-offset-[0.1em] hover:underline;
+    @apply duration-300 hover:text-blackOpacity;
+    font-weight: 600;
   }
 
   .portableText {
@@ -109,6 +110,7 @@
 
 * {
   font-variant-ligatures: none;
+  font-variation-settings: "EXPO" -20;
 }
 
 html {
@@ -167,6 +169,6 @@ small {
 caption,
 .caption {
   font-variation-settings: "EXPO" -20;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 14px;
 }

@@ -88,10 +88,37 @@ export default defineType({
       of: [{type: 'reference', to: [{type: 'material'}]}],
     }),
     defineField({
+      name: 'benefits',
+      title: 'Benefits',
+      type: 'internationalizedArrayBenefits',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'relatedArticles',
+      title: 'Articles',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'article'}]}],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'relatedArticlesText',
+      title: 'Related articles text',
+      type: 'internationalizedArraySimpleBlockContent',
+      group: 'editorial',
+    }),
+    defineField({
       name: 'faqs',
       title: 'FAQs',
       description: 'Shown in addition to any material FAQs',
       type: 'internationalizedArrayFaqs',
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'relatedProducts',
+      title: 'Related products',
+      type: 'array',
+      of: [{type: 'module.product'}],
+      validation: (rule) => rule.required(),
       group: 'editorial',
     }),
     defineField({

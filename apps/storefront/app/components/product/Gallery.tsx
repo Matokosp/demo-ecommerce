@@ -78,7 +78,7 @@ export default function ProductGallery({
   }
 
   return (
-    <div className="relative h-screen bg-lightGray" tabIndex={-1}>
+    <div className="relative h-screen w-2/4 bg-lightGray" tabIndex={-1}>
       <div className="h-full overflow-hidden" ref={emblaRef}>
         <div className="flex h-full">
           {/* Slides */}

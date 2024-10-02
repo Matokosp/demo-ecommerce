@@ -1,13 +1,11 @@
 import clsx from "clsx";
 
 import LinkButton from "~/components/elements/LinkButton";
-// import HeroContent from "~/components/heroes/HeroContent";
 import type { SanityHeroHome } from "~/lib/sanity";
 
 import { BrandBand } from "../elements/Icons";
 import { ParallaxText } from "../global/ParallaxText";
 import { Section } from "../layout/Section";
-// import HeroContent from "./HeroContent";
 
 type Props = {
   hero: SanityHeroHome;
@@ -49,7 +47,7 @@ export default function HomeHero({ hero }: Props) {
           )}
         </div>
       </Section>
-      <div className="mb-30 mt-20 grid grid-cols-12">
+      <div className="mb-30 mt-20 grid grid-cols-12 px-[22px]">
         <div className="col-span-5">
           <p className="indent-[50px]">{hero.textContent}</p>
         </div>

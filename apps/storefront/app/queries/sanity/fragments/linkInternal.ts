@@ -6,6 +6,7 @@ export const LINK_INTERNAL = groq`
   title,
   ...reference-> {
     "documentType": _type,
+    "slug": slug.current,
     (_type == "collection") => {
       "slug": "/collections/" + store.slug.current,
     },

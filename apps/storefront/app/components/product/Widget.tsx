@@ -75,13 +75,6 @@ export default function ProductWidget({
         </div>
       )}
 
-      {/* Title */}
-      {storefrontProduct?.title && (
-        <h1 className="text-md font-bold uppercase">
-          {storefrontProduct.title}
-        </h1>
-      )}
-
       {/* Vendor */}
       {storefrontProduct?.vendor && (
         <div className="mt-1 text-md text-darkGray">

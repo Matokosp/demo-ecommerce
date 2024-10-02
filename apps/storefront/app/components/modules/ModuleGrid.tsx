@@ -92,9 +92,10 @@ const PRODUCT_LAYOUT = [
 
 type Props = {
   items: (SanityModule | ProductWithNodes)[];
+  colorTheme?: { background: string; text: string };
 };
 
-export default function ModuleGrid({ items }: Props) {
+export default function ModuleGrid({ items, colorTheme }: Props) {
   return (
     <>
       {items.map((item, index) => {
@@ -114,6 +115,7 @@ export default function ModuleGrid({ items }: Props) {
               key={item._key}
               imageAspectClassName={productImageAspect}
               module={item}
+              colorTheme={colorTheme}
             />
           );
         } else {

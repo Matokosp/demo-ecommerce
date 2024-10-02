@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@demo-ecommerce/sanity": "file:../../packages/sanity",
-    "@headlessui/react": "^1.7.15",
+    "@headlessui/react": "^2.1.4",
     "@portabletext/react": "^3.0.11",
     "@remix-run/react": "^2.2.0",
     "@sanity/image-url": "^1.0.2",

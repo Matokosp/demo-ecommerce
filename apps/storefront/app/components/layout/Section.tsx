@@ -19,7 +19,7 @@ export const Section = ({
     <section
       style={style}
       className={clsx(
-        `grid h-full grid-cols-12 gap-x-5  ${className ?? ""}`,
+        `grid h-full grid-cols-12 gap-x-[10px]  ${className ?? ""}`,
         !noPadding ? "p-[22px]" : ""
       )}
     >

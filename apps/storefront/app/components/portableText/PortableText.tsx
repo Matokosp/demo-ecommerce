@@ -6,6 +6,7 @@ import { PortableTextBlock } from "@portabletext/types";
 import clsx from "clsx";
 import { useMemo } from "react";
 
+import EditorialReference from "~/components/portableText/annotations/EditorialReference";
 import LinkEmailAnnotation from "~/components/portableText/annotations/LinkEmail";
 import LinkExternalAnnotation from "~/components/portableText/annotations/LinkExternal";
 import LinkInternalAnnotation from "~/components/portableText/annotations/LinkInternal";
@@ -28,9 +29,15 @@ type Props = {
   blocks: PortableTextBlock[];
   className?: string;
   centered?: boolean;
+  setState?: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-export default function PortableText({ blocks, centered, className }: Props) {
+export default function PortableText({
+  blocks,
+  centered,
+  className,
+  setState,
+}: Props) {
   const components: PortableTextComponents = {
     list: {
       bullet: ({ children }) => (
@@ -44,6 +51,9 @@ export default function PortableText({ blocks, centered, className }: Props) {
       annotationLinkExternal: LinkExternalAnnotation,
       annotationLinkInternal: LinkInternalAnnotation,
       annotationLinkEmail: LinkEmailAnnotation,
+      annotationReference: (props) => (
+        <EditorialReference {...props} setActiveEditorialRef={setState} />
+      ),
       annotationProduct: (props: any) => <ProductAnnotation {...props} />,
     },
     block: Block,
